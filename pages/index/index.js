@@ -20,6 +20,7 @@ Page({
     hasNoCoupons:true,
     coupons: [],
     searchInput: '',
+    tuijian: '',
   },
 
   tabClick: function (e) {
@@ -30,7 +31,8 @@ Page({
   },
   //事件处理函数
   swiperchange: function(e) {
-      //console.log(e.detail.current)
+    var query = wx.createSelectorQuery();
+    // console.log(query.select('swiper'));
        this.setData({  
         swiperCurrent: e.detail.current  
     })  
@@ -41,6 +43,7 @@ Page({
     })
   },
   tapBanner: function(e) {
+    console.log(e);
     if (e.currentTarget.dataset.id != 0) {
       wx.navigateTo({
         url: "/pages/goods-details/index?id=" + e.currentTarget.dataset.id
@@ -63,8 +66,12 @@ Page({
   },
   onLoad: function () {
     var that = this
-    wx.setNavigationBarTitle({
-      title: wx.getStorageSync('mallName')
+    
+    // wx.setNavigationBarTitle({
+    //   title: wx.getStorageSync('mallName')
+    // })
+    that.setData({
+      tuijian: wx.getStorageSync('tuijian')
     })
     /*
     //调用应用实例的方法获取全局数据
@@ -172,6 +179,7 @@ Page({
         token: app.globalData.token
       },
       success: function (res) {
+        console.log(res);
         if (res.data.code == 20001 || res.data.code == 20002) {
           wx.showModal({
             title: '错误',

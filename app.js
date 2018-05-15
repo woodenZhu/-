@@ -3,14 +3,25 @@ App({
   onLaunch: function () {
     var that = this;
     //  获取商城名称
+    // wx.request({
+    //   url: 'https://api.it120.cc/'+ that.globalData.subDomain +'/config/get-value',
+    //   data: {
+    //     key: 'mallName'
+    //   },
+    //   success: function(res) {
+    //     if (res.data.code == 0) {
+    //       wx.setStorageSync('mallName', res.data.data.value);
+    //     }
+    //   }
+    // })
     wx.request({
       url: 'https://api.it120.cc/'+ that.globalData.subDomain +'/config/get-value',
       data: {
-        key: 'mallName'
+        key: 'tuijian'
       },
       success: function(res) {
         if (res.data.code == 0) {
-          wx.setStorageSync('mallName', res.data.data.value);
+          wx.setStorageSync('tuijian', res.data.data.value);
         }
       }
     })
@@ -189,7 +200,7 @@ App({
   },
   globalData:{
     userInfo:null,
-    subDomain: "tz", // 如果你的域名是： https://api.it120.cc/abcd 那么这里只要填写 abcd
+    subDomain: "guoyz", // 如果你的域名是： https://api.it120.cc/abcd 那么这里只要填写 abcd
     version: "2.0",
     shareProfile: '百款精品商品，总有一款适合您' // 首页转发的时候话术
   }

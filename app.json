@@ -1,6 +1,5 @@
 {
   "pages":[
-    "pages/start/start",
     "pages/index/index",
     "pages/goods-details/index",
     "pages/shop-cart/index",
@@ -20,7 +19,7 @@
   "window":{
     "backgroundTextStyle":"light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
+    "navigationBarTitleText": "荔红",
     "navigationBarTextStyle":"black"
   },
   "tabBar": {
