@@ -74,21 +74,25 @@
     <image class="wave" src="/images/more/wave.png" mode="aspectFill"></image>
     <image class="wave wave-bg" src="/images/more/wave.png" mode="aspectFill"></image>
   </view> -->
-  <view>
-    今日推荐：{{tuijian}}
+  <view class="tuijian">
+    <view class="tuijianName">
+      {{tuijian}}
+    </view>
+    <view class="tuijianTitle">
+      今日推荐
+    </view>
   </view>
+  
   <!-- <view class="swiper-container"> -->
-    <swiper previous-margin="30px" next-margin="30px" class="swiper_box" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" bindchange="swiperchange" id="swiper" circular="true" current="{{swiperCurrent}}">
-      <swiper-item wx:for="{{banners}}" wx:key="id" class="swiper_item">
-        <view style="-webkit-transform: scale({{ swiperCurrent == index ? 0.9 : 0.65 }}) translate({{ (swiperCurrent == index - 1 || swiperCurrent == index + 1) ? (swiperCurrent - index) * 30 : 0 }}%, 0); -webkit-transition: 0.4s;">
+    <swiper previous-margin="10px" next-margin="10px" class="swiper_box" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" bindchange="swiperchange" id="swiper" circular="true">
+      <swiper-item wx:for="{{goods}}" wx:key="id" style="overflow: visible;border-radius: 50%;">
+        <view class="swiper_item" style="transform: scale({{ swiperCurrent == index ? 0.9 : 0.65 }}) translate({{ (swiperCurrent == index - 1 || swiperCurrent == index + 1) ? (swiperCurrent - index) * 30 : 0 }}%, 0); transition: 0.4s;">
           <view>
-            <image bindtap="tapBanner" mode="aspectFill" data-id="{{item.businessId}}" src="{{item.picUrl}}_m" class="slide-image"/>
+            <image mode="aspectFill" data-id="{{item.id}}" bindtap="toDetailsTap" src="{{item.pic}}_m" lazy-load="true"/>
           </view>
-          <view>name</view>
+          <view class="title">{{item.name}}</view>
           <view class="flex-wrp">
-            <view class="price">1</view>
-            <view class="cart">2</view>
-            <view class="star">3</view>
+            <view class="price">¥ {{item.minPrice}}</view>
           </view>
         </view>
       </swiper-item>

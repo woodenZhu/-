@@ -1,7 +1,7 @@
 /**index.wxss**/
 
 .container {
-  background-color: #F2f2f2;
+  background-color: #fff;
   min-height: 100%;
 }
 .swiper-container{
@@ -11,9 +11,14 @@
 .swiper_box {
   width: 100%;
   height:862.5rpx;
+  overflow: visible;
+  margin-top: 20%;
+  margin-left: 0;
+  padding-left: 0;
 }
 .swiper_item {
-  box-shadow: 0 100rpx 5rpx black;
+  box-shadow: 20rpx 20rpx 10rpx #F2f2f2;
+  border-radius: 20rpx;
 }
 
 swiper-item image {
@@ -21,27 +26,6 @@ swiper-item image {
   display: inline-block;
   overflow: hidden;
   height:662.5rpx;
-}
-.swiper-container .dots{  
-  position: absolute;  
-  left: 0;  
-  right: 0;  
-  bottom: 20rpx;  
-  display: flex;  
-  justify-content: center;  
-}  
-.swiper-container .dots .dot{  
-  margin: 0 8rpx;  
-  width: 14rpx;  
-  height: 14rpx;  
-  background: #fff;  
-  border-radius: 50%;  
-  transition: all .6s;  
-  opacity: .5;
-}  
-.swiper-container .dots .dot.active{  
-  width: 14rpx;  
-  opacity: 1;
 }
 
 .type-navbar{
@@ -192,56 +176,33 @@ swiper-item image {
   display: inline-block;
 }
 
-.search-view{
-  position:fixed;
-  left:0;
-  right:0;
-  top:0;
-  z-index:500;
-  width: 100%;
-  height: 100rpx;
-  background: gray;
-  display: flex;
-  flex-direction: column;
-}
-.search-content{
-   background: white;
-   width:650rpx;
-   display: flex;
-   flex-direction: row;
-   align-items: center;
-   padding-top: auto;
-   padding-left: 20rpx;
-   padding-bottom: auto;
-   margin: auto;
-   height: 70rpx;
-   border-radius:5px 5px;
-}
-.search-icon{
-  width: 40rpx;
-  height: 40rpx;
-  margin-right: 20rpx;
-}
-.search-input{
-  width: 500rpx;
-  font-size: 28rpx;
-}
-.search-btn{
-  width: 150rpx;
-  height: 70rpx;
-  margin-right: 0rpx;
-  background-color:blueviolet;
-  font-size: 28rpx;
-  align-items: center;
-  border-top-left-radius: 0rpx;
-  border-bottom-left-radius: 0rpx;
-  color:#fff;
-  border:none;
-  position: relative;
-}
-
-
 .flex-wrp {display: flex;flex-direction:row;}
-.price {background: green;width:100px; height: 100px;}
-.cart {background: red;width:100px; height: 100px;}
-.star {background: blue;width:100px; height: 100px;}
+.price {
+  width: 280rpx;
+  overflow: hidden;
+  font-size: 24rpx;
+  padding: 24rpx 0;
+  color:#e64340;
+  margin-left: 24rpx;
+}
+.title {
+  width: 280rpx;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  font-size: 24rpx;
+  padding: 24rpx 0 0rpx 0;
+  color:#000;
+  margin-left: 24rpx;
+}
+.tuijian {
+  position: absolute;
+  left: 5%;
+  text-align: left;
+}
+.tuijian .tuijianName {
+  font-size: 50rpx;
+}
+.tuijian .tuijianTitle {
+  font-size: 30rpx;
+}

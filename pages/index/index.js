@@ -31,7 +31,6 @@ Page({
   },
   //事件处理函数
   swiperchange: function(e) {
-    var query = wx.createSelectorQuery();
     // console.log(query.select('swiper'));
        this.setData({  
         swiperCurrent: e.detail.current  
@@ -124,7 +123,6 @@ Page({
     if (categoryId == 0) {
       categoryId = "";
     }
-    console.log(categoryId)
     var that = this;
     wx.request({
       url: 'https://api.it120.cc/'+ app.globalData.subDomain +'/shop/goods/list',
