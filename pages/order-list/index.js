@@ -1,102 +1,39 @@
 var wxpay = require('../../utils/pay.js')
 var app = getApp()
 Page({
-  data:{
-    statusType: ["待付款", "待发货", "待收货", "待评价", "已完成"],
-    currentType:0,
-    tabClass: ["", "", "", "", ""]
+  data: {
+    tabs: ["待付款", "待发货", "待收货", "待评价", "已完成"],
+    tabClass: ["", "", "", "", ""],
+    stv: {
+      windowWidth: 0,
+      lineWidth: 0,
+      offset: 0,
+      tStart: false
+    },
+    activeTab: 0,
+    loadingStatus: false,
   },
-  statusTap:function(e){
-     var curType =  e.currentTarget.dataset.index;
-     this.data.currentType = curType
-     this.setData({
-       currentType:curType
-     });
-     this.onShow();
+  onLoad: function (options) {
+    try {
+      let { tabs } = this.data;
+      var res = wx.getSystemInfoSync()
+      this.windowWidth = res.windowWidth;
+      this.data.stv.lineWidth = this.windowWidth / this.data.tabs.length;
+      this.data.stv.windowWidth = res.windowWidth;
+      this.setData({ stv: this.data.stv })
+      this.tabsCount = tabs.length;
+    } catch (e) {
+    }
   },
-  orderDetail : function (e) {
-    var orderId = e.currentTarget.dataset.id;
-    wx.navigateTo({
-      url: "/pages/order-details/index?id=" + orderId
+  onShow: function () {
+    // 获取订单列表
+    this.setData({
+      loadingStatus: true
     })
+    this.getOrderStatistics();
+    this.getOrderList();
   },
-  cancelOrderTap:function(e){
-    var that = this;
-    var orderId = e.currentTarget.dataset.id;
-     wx.showModal({
-      title: '确定要取消该订单吗？',
-      content: '',
-      success: function(res) {
-        if (res.confirm) {
-          wx.showLoading();
-          wx.request({
-            url: 'https://api.it120.cc/' + app.globalData.subDomain + '/order/close',
-            data: {
-              token: app.globalData.token,
-              orderId: orderId
-            },
-            success: (res) => {
-              wx.hideLoading();
-              if (res.data.code == 0) {
-                that.onShow();
-              }
-            }
-          })
-        }
-      }
-    })
-  },
-  toPayTap:function(e){
-    var that = this;
-    var orderId = e.currentTarget.dataset.id;
-    var money = e.currentTarget.dataset.money;
-    wx.request({
-      url: 'https://api.it120.cc/' + app.globalData.subDomain + '/user/amount',
-      data: {
-        token: app.globalData.token
-      },
-      success: function (res) {
-        if (res.data.code == 0) {
-          // res.data.data.balance
-          money = money - res.data.data.balance;
-          if (money <= 0) {
-            // 直接使用余额支付
-            wx.request({
-              url: 'https://api.it120.cc/' + app.globalData.subDomain + '/order/pay',
-              method:'POST',
-              header: {
-                'content-type': 'application/x-www-form-urlencoded'
-              },
-              data: {
-                token: app.globalData.token,
-                orderId: orderId
-              },
-              success: function (res2) {
-                that.onShow();
-              }
-            })
-          } else {
-            wxpay.wxpay(app, money, orderId, "/pages/order-list/index");
-          }
-        } else {
-          wx.showModal({
-            title: '错误',
-            content: '无法获取用户资金信息',
-            showCancel: false
-          })
-        }
-      }
-    })    
-  },
-  onLoad:function(options){
-    // 生命周期函数--监听页面加载
-   
-  },
-  onReady:function(){
-    // 生命周期函数--监听页面初次渲染完成
- 
-  },
-  getOrderStatistics : function () {
+  getOrderStatistics: function () {
     var that = this;
     wx.request({
       url: 'https://api.it120.cc/' + app.globalData.subDomain + '/order/statistics',
@@ -135,54 +72,226 @@ Page({
             tabClass: tabClass,
           });
         }
+      },
+      fail: (err) => {
+        console.log(err);
       }
     })
   },
-  onShow:function(){
-    // 获取订单列表
-    wx.showLoading();
+  getOrderList: function () {
     var that = this;
     var postData = {
-      token: app.globalData.token
+      token: app.globalData.token,
+      pageSize: app.globalData.pageSize,
+      page: app.globalData.page
     };
-    postData.status = that.data.currentType;
-    this.getOrderStatistics();
     wx.request({
       url: 'https://api.it120.cc/' + app.globalData.subDomain + '/order/list',
       data: postData,
       success: (res) => {
-        wx.hideLoading();
-        if (res.data.code == 0) {
+        if (res.data.code === 0) {
           that.setData({
-            orderList: res.data.data.orderList,
-            logisticsMap : res.data.data.logisticsMap,
-            goodsMap : res.data.data.goodsMap
+            totalOrderList: res.data.data.orderList,
+            logisticsMap: res.data.data.logisticsMap,
+            goodsMap: res.data.data.goodsMap
+          });
+          //订单分类
+          var orderList = [];
+          for (let i = 0; i < that.data.tabs.length; i++) {
+            var tempList = [];
+            for (let j = 0; j < res.data.data.orderList.length; j++) {
+              if (res.data.data.orderList[j].status == i) {
+                tempList.push(res.data.data.orderList[j])
+                //orderList[i].push(res.data.data.orderList[j])
+              }
+            }
+            orderList.push({ 'status': i, 'isnull': tempList.length === 0, 'orderList': tempList })
+          }
+          this.setData({
+            orderList: orderList
           });
         } else {
-          this.setData({
-            orderList: null,
+          that.setData({
+            orderList: 'null',
             logisticsMap: {},
             goodsMap: {}
           });
         }
+        this.setData({
+          loadingStatus: false
+        })
+      },
+      fail: (res) =>{
       }
     })
-    
   },
-  onHide:function(){
-    // 生命周期函数--监听页面隐藏
- 
+  orderDetail: function (e) {
+    var orderId = e.currentTarget.dataset.id;
+    wx.navigateTo({
+      url: "/pages/order-details/index?id=" + orderId
+    })
   },
-  onUnload:function(){
-    // 生命周期函数--监听页面卸载
- 
+  cancelOrderTap: function (e) {
+    var that = this;
+    var orderId = e.currentTarget.dataset.id;
+    wx.showModal({
+      title: '确定要取消该订单吗？',
+      content: '',
+      success: function (res) {
+        if (res.confirm) {
+          wx.showLoading();
+          wx.request({
+            url: 'https://api.it120.cc/' + app.globalData.subDomain + '/order/close',
+            data: {
+              token: app.globalData.token,
+              orderId: orderId
+            },
+            success: (res) => {
+              wx.hideLoading();
+              if (res.data.code == 0) {
+                that.onShow();
+              }
+            }
+          })
+        }
+      }
+    })
   },
-  onPullDownRefresh: function() {
-    // 页面相关事件处理函数--监听用户下拉动作
-   
+  toPayTap: function (e) {
+    var that = this;
+    var orderId = e.currentTarget.dataset.id;
+    var money = e.currentTarget.dataset.money;
+    //wxpay.wxpay(app, money, orderId, "/pages/order-list/index");
+    wx.request({
+      url: 'https://api.it120.cc/' + app.globalData.subDomain + '/user/amount',
+      data: {
+        token: app.globalData.token
+      },
+      success: function (res) {
+        if (res.data.code == 0) {
+          // res.data.data.balance
+          money = money - res.data.data.balance;
+          if (money <= 0) {
+            // 直接使用余额支付
+            wx.request({
+              url: 'https://api.it120.cc/' + app.globalData.subDomain + '/order/pay',
+              method: 'POST',
+              header: {
+                'content-type': 'application/x-www-form-urlencoded'
+              },
+              data: {
+                token: app.globalData.token,
+                orderId: orderId
+              },
+              success: function (res2) {
+                //wx.reLaunch({
+                //  url: "/pages/ucenter/order-list/index"
+                //});
+                that.onShow();
+              }
+            })
+          } else {
+            wxpay.wxpay(app, money, orderId, "/pages/ucenter/order-list/index");
+          }
+        } else {
+          wx.showModal({
+            title: '错误',
+            content: '无法获取用户资金信息',
+            showCancel: false
+          })
+        }
+      }
+    })
   },
-  onReachBottom: function() {
-    // 页面上拉触底事件的处理函数
-  
-  }
+  ////////
+  handlerStart(e) {
+    let { clientX, clientY } = e.touches[0];
+    this.startX = clientX;
+    this.tapStartX = clientX;
+    this.tapStartY = clientY;
+    this.data.stv.tStart = true;
+    this.tapStartTime = e.timeStamp;
+    this.setData({ stv: this.data.stv })
+  },
+  handlerMove(e) {
+    let { clientX, clientY } = e.touches[0];
+    let { stv } = this.data;
+    let offsetX = this.startX - clientX;
+    this.startX = clientX;
+    stv.offset += offsetX;
+    if (stv.offset <= 0) {
+      stv.offset = 0;
+    } else if (stv.offset >= stv.windowWidth * (this.tabsCount - 1)) {
+      stv.offset = stv.windowWidth * (this.tabsCount - 1);
+    }
+    this.setData({ stv: stv });
+  },
+  handlerCancel(e) {
+
+  },
+  handlerEnd(e) {
+    let { clientX, clientY } = e.changedTouches[0];
+    let endTime = e.timeStamp;
+    let { tabs, stv, activeTab } = this.data;
+    let { offset, windowWidth } = stv;
+    //快速滑动
+    if (endTime - this.tapStartTime <= 300) {
+      //判断是否左右滑动(竖直方向滑动小于50)
+      if (Math.abs(this.tapStartY - clientY) < 50) {
+        //Y距离小于50 所以用户是左右滑动
+        if (this.tapStartX - clientX > 5) {
+          //向左滑动超过5个单位，activeTab增加
+          if (activeTab < this.tabsCount - 1) {
+            this.setData({ activeTab: ++activeTab })
+          }
+        } else if (clientX - this.tapStartX > 5) {
+          //向右滑动超过5个单位，activeTab减少
+          if (activeTab > 0) {
+            this.setData({ activeTab: --activeTab })
+          }
+        }
+        stv.offset = stv.windowWidth * activeTab;
+      } else {
+        //Y距离大于50 所以用户是上下滑动
+        let page = Math.round(offset / windowWidth);
+        if (activeTab != page) {
+          this.setData({ activeTab: page })
+        }
+        stv.offset = stv.windowWidth * page;
+      }
+    } else {
+      let page = Math.round(offset / windowWidth);
+      if (activeTab != page) {
+        this.setData({ activeTab: page })
+      }
+      stv.offset = stv.windowWidth * page;
+    }
+    stv.tStart = false;
+    this.setData({ stv: this.data.stv })
+  },
+  ////////
+  _updateSelectedPage(page) {
+    let { tabs, stv, activeTab } = this.data;
+    activeTab = page;
+    this.setData({ activeTab: activeTab })
+    stv.offset = stv.windowWidth * activeTab;
+    this.setData({ stv: this.data.stv })
+  },
+  handlerTabTap(e) {
+    this._updateSelectedPage(e.currentTarget.dataset.index);
+  },
+  //事件处理函数
+  swiperchange: function (e) {
+    //console.log('swiperCurrent',e.detail.current)
+    let { tabs, stv, activeTab } = this.data;
+    activeTab = e.detail.current;
+    this.setData({ activeTab: activeTab })
+    stv.offset = stv.windowWidth * activeTab;
+    this.setData({ stv: this.data.stv })
+  },
+  toIndexPage: function () {
+    wx.switchTab({
+      url: "/pages/classification/index"
+    });
+  },
 })

@@ -199,6 +199,8 @@ App({
 
   },
   globalData:{
+    page: 1,
+    pageSize: 10000,
     userInfo:null,
     subDomain: "guoyz", // 如果你的域名是： https://api.it120.cc/abcd 那么这里只要填写 abcd
     version: "2.0",

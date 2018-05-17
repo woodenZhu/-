@@ -12,6 +12,11 @@ Page({
     allGoodsAndYunPrice:0,
     goodsJsonStr:"",
     orderType:"", //订单类型，购物车下单或立即支付下单，默认是购物车，
+    curAddressData: {
+      address:"新港中路397号",
+      linkMan:"张三",
+      mobile:"020-8116788"
+    },
 
     hasNoCoupons: true,
     coupons: [],
@@ -31,7 +36,6 @@ Page({
     }else{
       //购物车下单
       var shopCarInfoMem = wx.getStorageSync('shopCarInfo');
-      that.data.kjId = buyNowInfoMem.kjId;
       if (shopCarInfoMem && shopCarInfoMem.shopList) {
         // shopList = shopCarInfoMem.shopList
         shopList = shopCarInfoMem.shopList.filter(entity => {
@@ -78,6 +82,7 @@ Page({
       goodsJsonStr: that.data.goodsJsonStr,
       remark: remark
     };
+    console.log(postData);
     if (that.data.kjId) {
       postData.kjid = that.data.kjId;
     }
@@ -220,7 +225,6 @@ Page({
 
     }
     goodsJsonStr += "]";
-    //console.log(goodsJsonStr);
     that.setData({
       isNeedLogistics: isNeedLogistics,
       goodsJsonStr: goodsJsonStr

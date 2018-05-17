@@ -1,3 +1,4 @@
+@import "/dist/packages/@zanui/index.wxss";
 /**app.wxss**/
 .container {
   height: 100%;
@@ -10,3 +11,4 @@
 .wxParse-img {
   display: block !important;
 }
+
