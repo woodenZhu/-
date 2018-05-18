@@ -170,11 +170,12 @@ Page({
   },
   gitCoupon : function (e) {
     var that = this;
+    var token = wx.getStorageSync('token');
     wx.request({
       url: 'https://api.it120.cc/' + app.globalData.subDomain + '/discounts/fetch',
       data: {
         id: e.currentTarget.dataset.id,
-        token: app.globalData.token
+        token: token
       },
       success: function (res) {
         console.log(res);

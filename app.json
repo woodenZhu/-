@@ -1,8 +1,8 @@
 {
   "pages":[
-    "pages/start/start",
     "pages/index/index",
     "pages/goods-details/index",
+    "pages/finder/index",
     "pages/shop-cart/index",
     "pages/to-pay-order/index",
     "pages/select-address/index",
@@ -15,18 +15,19 @@
     "pages/notice/show",
     "pages/recharge/index",
     "pages/withdraw/index",
-    "pages/kanjia/index"
+    "pages/kanjia/index",
+    "pages/authorize/index"
   ],
   "window":{
     "backgroundTextStyle":"light",
-    "navigationBarBackgroundColor": "#fff",
+    "navigationBarBackgroundColor": "#e85654",
     "navigationBarTitleText": "荔红",
     "navigationBarTextStyle":"black"
   },
   "tabBar": {
     "color": "#6e6d6b",
     "selectedColor": "#e64340",
-    "borderStyle": "white",
+    "borderStyle": "black",
     "backgroundColor": "#fff",
     "box-shadow":"0 0 6px 0",
     "list": [{
@@ -35,6 +36,11 @@
       "selectedIconPath": "images/nav/home-on.png",
       "text": "首页"
     }, {
+      "pagePath": "pages/finder/index",
+      "iconPath": "images/nav/find-off.png",
+      "selectedIconPath": "images/nav/find-on.png",
+      "text": "发现"
+    },{
       "pagePath": "pages/shop-cart/index",
       "iconPath": "images/nav/cart-off.png",
       "selectedIconPath": "images/nav/cart-on.png",

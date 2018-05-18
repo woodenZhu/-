@@ -12,12 +12,6 @@ Page({
     allGoodsAndYunPrice:0,
     goodsJsonStr:"",
     orderType:"", //订单类型，购物车下单或立即支付下单，默认是购物车，
-    curAddressData: {
-      address:"新港中路397号",
-      linkMan:"张三",
-      mobile:"020-8116788"
-    },
-
     hasNoCoupons: true,
     coupons: [],
     youhuijine:0, //优惠券金额
@@ -71,7 +65,7 @@ Page({
   createOrder:function (e) {
     wx.showLoading();
     var that = this;
-    var loginToken = app.globalData.token // 用户登录 token
+    var loginToken = wx.getStorageSync('token'); // 用户登录 token
     var remark = ""; // 备注信息
     if (e) {
       remark = e.detail.value.remark; // 备注信息
@@ -82,7 +76,6 @@ Page({
       goodsJsonStr: that.data.goodsJsonStr,
       remark: remark
     };
-    console.log(postData);
     if (that.data.kjId) {
       postData.kjid = that.data.kjId;
     }
@@ -173,10 +166,11 @@ Page({
   },
   initShippingAddress: function () {
     var that = this;
+    var token = wx.getStorageSync('token');
     wx.request({
       url: 'https://api.it120.cc/'+ app.globalData.subDomain +'/user/shipping-address/default',
       data: {
-        token:app.globalData.token
+        token: token
       },
       success: (res) =>{
         if (res.data.code == 0) {
@@ -243,10 +237,11 @@ Page({
   },
   getMyCoupons: function () {
     var that = this;
+    var token = wx.getStorageSync('token');
     wx.request({
       url: 'https://api.it120.cc/' + app.globalData.subDomain + '/discounts/my',
       data: {
-        token: app.globalData.token,
+        token: token,
         status:0
       },
       success: function (res) {

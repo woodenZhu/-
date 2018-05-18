@@ -22,7 +22,7 @@ Page({
     var address = e.detail.value.address;
     var mobile = e.detail.value.mobile;
     var code = e.detail.value.code;
-
+    var token = wx.getStorageSync('token');
     if (linkMan == ""){
       wx.showModal({
         title: '提示',
@@ -88,7 +88,7 @@ Page({
     wx.request({
       url: 'https://api.it120.cc/' + app.globalData.subDomain + '/user/shipping-address/' + apiAddoRuPDATE,
       data: {
-        token: app.globalData.token,
+        token: token,
         id: apiAddid,
         provinceId: commonCityData.cityData[this.data.selProvinceIndex].id,
         cityId: cityId,
@@ -106,7 +106,12 @@ Page({
           wx.showModal({
             title: '失败',
             content: res.data.msg,
-            showCancel:false
+            showCancel:false,
+            success: () => {
+              wx.navigateTo({
+                url: "/pages/authorize/index"
+              })
+            }
           })
           return;
         }
@@ -179,6 +184,7 @@ Page({
   onLoad: function (e) {
     var that = this;
     this.initCityData(1);
+    var token = wx.getStorageSync('token');
     var id = e.id;
     if (id) {
       // 初始化原数据
@@ -186,7 +192,7 @@ Page({
       wx.request({
         url: 'https://api.it120.cc/' + app.globalData.subDomain + '/user/shipping-address/detail',
         data: {
-          token: app.globalData.token,
+          token: token,
           id: id
         },
         success: function (res) {
@@ -236,6 +242,7 @@ Page({
   deleteAddress: function (e) {
     var that = this;
     var id = e.currentTarget.dataset.id;
+    var token = wx.getStorageSync('token');
     wx.showModal({
       title: '提示',
       content: '确定要删除该收货地址吗？',
@@ -244,7 +251,7 @@ Page({
           wx.request({
             url: 'https://api.it120.cc/' + app.globalData.subDomain + '/user/shipping-address/delete',
             data: {
-              token: app.globalData.token,
+              token: token,
               id: id
             },
             success: (res) => {

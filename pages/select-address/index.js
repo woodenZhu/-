@@ -8,10 +8,11 @@ Page({
 
   selectTap: function (e) {
     var id = e.currentTarget.dataset.id;
+    var token = wx.getStorageSync('token');
     wx.request({
       url: 'https://api.it120.cc/'+ app.globalData.subDomain +'/user/shipping-address/update',
       data: {
-        token:app.globalData.token,
+        token: token,
         id:id,
         isDefault:'true'
       },
@@ -34,19 +35,17 @@ Page({
   },
   
   onLoad: function () {
-    console.log('onLoad')
-
-   
   },
   onShow : function () {
     this.initShippingAddress();
   },
   initShippingAddress: function () {
     var that = this;
+    var token = wx.getStorageSync('token');
     wx.request({
       url: 'https://api.it120.cc/'+ app.globalData.subDomain +'/user/shipping-address/list',
       data: {
-        token:app.globalData.token
+        token: token
       },
       success: (res) =>{
         if (res.data.code == 0) {

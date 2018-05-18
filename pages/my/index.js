@@ -5,13 +5,25 @@ Page({
     balance:0,
     freeze:0,
     score:0,
-    score_sign_continuous:0
+    score_sign_continuous:0,
+    servicePhoneNumber: '13570618856'
   },
 	onLoad() {
     
 	},	
   onShow() {
-    this.getUserInfo();
+    // this.getUserInfo();
+    let that = this
+    let userInfo = wx.getStorageSync('userInfo')
+    if (!userInfo) {
+      wx.navigateTo({
+        url: "/pages/authorize/index"
+      })
+    } else {
+      that.setData({
+        userInfo: userInfo
+      })
+    }
     this.setData({
       version: app.globalData.version
     });
@@ -33,10 +45,26 @@ Page({
         }
       })
   },
+  makePhoneCall: function () {
+    console.log("call");
+    var that = this;
+    wx.makePhoneCall({
+      phoneNumber: that.data.servicePhoneNumber,
+      success: function (res) { },
+      fail: function (res) {
+        wx.showModal({
+          title: '呼叫失败',
+          content: '请稍后再试',
+          showCancel: false,
+        })
+      },
+      complete: function (res) { },
+    })
+  },
   aboutUs : function () {
     wx.showModal({
       title: '关于我们',
-      content: '本系统基于开源小程序商城系统 https://github.com/EastWorld/wechat-app-mall 搭建，祝大家使用愉快！',
+      content: '专卖荔枝的小程序',
       showCancel:false
     })
   },
@@ -50,10 +78,11 @@ Page({
       return;
     }
     var that = this;
+    var token = wx.getStorageSync('token');
     wx.request({
       url: 'https://api.it120.cc/' + app.globalData.subDomain + '/user/wxapp/bindMobile',
       data: {
-        token: app.globalData.token,
+        token: token,
         encryptedData: e.detail.encryptedData,
         iv: e.detail.iv
       },
@@ -77,10 +106,11 @@ Page({
   },
   getUserApiInfo: function () {
     var that = this;
+    var token = wx.getStorageSync('token');
     wx.request({
       url: 'https://api.it120.cc/' + app.globalData.subDomain + '/user/detail',
       data: {
-        token: app.globalData.token
+        token: token
       },
       success: function (res) {
         if (res.data.code == 0) {
@@ -95,10 +125,11 @@ Page({
   },
   getUserAmount: function () {
     var that = this;
+    var token = wx.getStorageSync('token');
     wx.request({
       url: 'https://api.it120.cc/' + app.globalData.subDomain + '/user/amount',
       data: {
-        token: app.globalData.token
+        token: token
       },
       success: function (res) {
         if (res.data.code == 0) {
@@ -114,10 +145,11 @@ Page({
   },
   checkScoreSign: function () {
     var that = this;
+    var token = wx.getStorageSync('token');
     wx.request({
       url: 'https://api.it120.cc/' + app.globalData.subDomain + '/score/today-signed',
       data: {
-        token: app.globalData.token
+        token: token
       },
       success: function (res) {
         if (res.data.code == 0) {
@@ -130,10 +162,11 @@ Page({
   },
   scoresign: function () {
     var that = this;
+    var token = wx.getStorageSync('token');
     wx.request({
       url: 'https://api.it120.cc/' + app.globalData.subDomain + '/score/sign',
       data: {
-        token: app.globalData.token
+        token: token
       },
       success: function (res) {
         if (res.data.code == 0) {
@@ -150,27 +183,8 @@ Page({
     })
   },
   relogin:function(){
-    var that = this;
-    wx.authorize({
-      scope: 'scope.userInfo',
-      success() {
-        app.globalData.token = null;
-        app.login();
-        wx.showModal({
-          title: '提示',
-          content: '重新登陆成功',
-          showCancel: false,
-          success: function (res) {
-            if (res.confirm) {
-              that.onShow();
-            }
-          }
-        })
-      },
-      fail(res){
-        console.log(res);
-        wx.openSetting({});
-      }
+    wx.navigateTo({
+      url: "/pages/authorize/index"
     })
   },
   recharge: function () {

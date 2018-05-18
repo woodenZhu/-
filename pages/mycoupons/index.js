@@ -12,10 +12,11 @@ Page({
   },
   getMyCoupons: function () {
     var that = this;
+    var token = wx.getStorageSync('token');
     wx.request({
       url: 'https://api.it120.cc/' + app.globalData.subDomain + '/discounts/my',
       data: {
-        token: app.globalData.token,
+        token: token,
         status: 0
       },
       success: function (res) {
@@ -27,6 +28,7 @@ Page({
             });
           }
         }
+        console.log(that.data.coupons);
       }
     })
   },
@@ -34,6 +36,11 @@ Page({
     wx.reLaunch({
       url: '/pages/index/index'
     })
+  },
+  toFindPage: function() {
+    wx.switchTab({
+      url: "/pages/finder/index"
+    });
   }
 
 })

@@ -1,7 +1,7 @@
 /**index.wxss**/
 @import "../template-cart/template-cart.wxss";
 page{
-  min-height: 100%;
+  height: 100%;
   background-color: #F2f2f2;
 }
 .container {

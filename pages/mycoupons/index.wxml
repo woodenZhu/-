@@ -1,5 +1,5 @@
 <view class="container">
-    <view class="coupons-list">
+    <view class="coupons-list" wx:if="{{coupons.length > 0}}">
       <view class="coupons-item" wx:for-items="{{coupons}}" wx:for-index="idx"  bindtap="gitCoupon" data-id="{{item.id}}">
         <view style="font-size: 50rpx"> ￥ {{item.money}}元 </view>
         <view> {{item.name}} </view>
@@ -7,6 +7,11 @@
         <view> {{item.dateEnd}} 前有效 </view>
       </view>
     </view>
+    <view wx:else>
+        <view class="title-box">没有优惠券</view>
+        <view class="to-index-btn" bindtap="toFindPage">去领券</view> 
+    </view>
+    
     <view style="height:100rpx;background-color:#fff;width:100%;"></view>
     <view class="bottom-box">
         <view class="add-btn" bindtap="goBuy">立即前往下单</view>

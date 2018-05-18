@@ -35,9 +35,10 @@ Page({
   },
   getOrderStatistics: function () {
     var that = this;
+    var token = wx.getStorageSync('token');
     wx.request({
       url: 'https://api.it120.cc/' + app.globalData.subDomain + '/order/statistics',
-      data: { token: app.globalData.token },
+      data: { token: token },
       success: (res) => {
         wx.hideLoading();
         if (res.data.code == 0) {
@@ -80,8 +81,9 @@ Page({
   },
   getOrderList: function () {
     var that = this;
+    var token = wx.getStorageSync('token');
     var postData = {
-      token: app.globalData.token,
+      token: token,
       pageSize: app.globalData.pageSize,
       page: app.globalData.page
     };
@@ -134,6 +136,7 @@ Page({
   cancelOrderTap: function (e) {
     var that = this;
     var orderId = e.currentTarget.dataset.id;
+    var token = wx.getStorageSync('token');
     wx.showModal({
       title: '确定要取消该订单吗？',
       content: '',
@@ -143,7 +146,7 @@ Page({
           wx.request({
             url: 'https://api.it120.cc/' + app.globalData.subDomain + '/order/close',
             data: {
-              token: app.globalData.token,
+              token: token,
               orderId: orderId
             },
             success: (res) => {
@@ -161,11 +164,12 @@ Page({
     var that = this;
     var orderId = e.currentTarget.dataset.id;
     var money = e.currentTarget.dataset.money;
+    var token = wx.getStorageSync('token');
     //wxpay.wxpay(app, money, orderId, "/pages/order-list/index");
     wx.request({
       url: 'https://api.it120.cc/' + app.globalData.subDomain + '/user/amount',
       data: {
-        token: app.globalData.token
+        token: token
       },
       success: function (res) {
         if (res.data.code == 0) {
@@ -180,7 +184,7 @@ Page({
                 'content-type': 'application/x-www-form-urlencoded'
               },
               data: {
-                token: app.globalData.token,
+                token: token,
                 orderId: orderId
               },
               success: function (res2) {

@@ -61,10 +61,11 @@ Page({
   },
   onShow: function () {
     var that = this;
+    var token = wx.getStorageSync('token');
     wx.request({
       url: 'https://api.it120.cc/' + app.globalData.subDomain + '/order/detail',
       data: {
-        token: app.globalData.token,
+        token: token,
         id: that.data.orderId
       },
       success: (res) => {
@@ -103,6 +104,7 @@ Page({
   confirmBtnTap: function (e) {
     var that = this;
     var orderId = e.currentTarget.dataset.id;
+    var token = wx.getStorageSync('token');
     wx.showModal({
       title: '确认您已收到商品？',
       content: '',
@@ -112,7 +114,7 @@ Page({
           wx.request({
             url: 'https://api.it120.cc/' + app.globalData.subDomain + '/order/delivery',
             data: {
-              token: app.globalData.token,
+              token: token,
               orderId: orderId
             },
             success: (res) => {
@@ -128,7 +130,7 @@ Page({
   submitReputation: function (e) {
     var that = this;
     var postJsonString = {};
-    postJsonString.token = app.globalData.token;
+    postJsonString.token = wx.getStorageSync('token');
     postJsonString.orderId = this.data.orderId;
     var reputations = [];
     var i = 0;
