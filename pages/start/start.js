@@ -15,16 +15,21 @@ Page({
   onLoad:function(){
     var that = this
     wx.setNavigationBarTitle({
-      title: wx.getStorageSync('mallName')
-    })
-    app.getUserInfo(function(userInfo){
-      that.setData({
-        userInfo: userInfo
-      })
+      title: ''
     })
   },
   onShow:function(){
-
+    let that = this
+    let userInfo = wx.getStorageSync('userInfo')
+    if (!userInfo) {
+      wx.navigateTo({
+        url: "/pages/authorize/index"
+      })
+    } else {
+      that.setData({
+        userInfo: userInfo
+      })
+    }
   },
   onReady: function(){
     var that = this;

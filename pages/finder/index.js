@@ -184,13 +184,16 @@ Page({
   },
   gitCoupon: function (e) {
     var that = this;
+    var token = wx.getStorageSync('token');
+    console.log(e.currentTarget.dataset.id);
     wx.request({
       url: 'https://api.it120.cc/' + app.globalData.subDomain + '/discounts/fetch',
       data: {
         id: e.currentTarget.dataset.id,
-        token: app.globalData.token
+        token: token
       },
       success: function (res) {
+        console.log(res);
         if (res.data.code == 20001 || res.data.code == 20002) {
           that.setData({
             getCoupStatus: 0
@@ -248,7 +251,12 @@ Page({
           wx.showModal({
             title: '错误',
             content: res.data.msg,
-            showCancel: false
+            showCancel: false,
+            success: () => {
+              wx.navigateTo({
+                url: "/pages/authorize/index"
+              })
+            }
           })
         }
       }

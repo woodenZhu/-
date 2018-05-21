@@ -1,16 +1,21 @@
 <!--index.wxml-->
 <!--1px = 750/320 = 2.34rpx;-->
 <view class="container">
-  <view class="tuijian">
-    <view class="tuijianName">
-      {{tuijian}}
-    </view>
-    <view class="tuijianTitle">
-      今日推荐
-    </view>
+
+  <view class="remind-box" wx:if="{{remind}}">
+    <image class="remind-img" src="/images/more/loading.gif"></image>
   </view>
+
+  <block wx:else>
+    <view class="tuijian">
+      <view class="tuijianName">
+        {{tuijian}}
+      </view>
+      <view class="tuijianTitle">
+        今日推荐
+      </view>
+    </view>
   
-  <!-- <view class="swiper-container"> -->
     <swiper previous-margin="10px" next-margin="10px" class="swiper_box" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" bindchange="swiperchange" id="swiper" circular="true">
       <swiper-item wx:for="{{goods}}" wx:key="id" style="overflow: visible;border-radius: 50%;">
         <view class="swiper_item" style="transform: scale({{ swiperCurrent == index ? 0.9 : 0.65 }}) translate({{ (swiperCurrent == index - 1 || swiperCurrent == index + 1) ? (swiperCurrent - index) * 30 : 0 }}%, 0); transition: 0.4s;">
@@ -24,5 +29,6 @@
         </view>
       </swiper-item>
     </swiper>
-  <!-- </view> -->
+  </block>
+  
 </view>
