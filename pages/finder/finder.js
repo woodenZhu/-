@@ -32,7 +32,7 @@ Page({
   onShareAppMessage: function () {
     return {
       title: wx.getStorageSync('mallName') + '——' + app.globalData.shareProfile,
-      path: '/pages/finder/index',
+      path: '/pages/finder/finder',
       success: function (res) {
         // 转发成功
       },
@@ -80,13 +80,13 @@ Page({
   //事件处理函数
   toDetailsTap: function (e) {
     wx.navigateTo({
-      url: "/pages/goods-details/index?id=" + e.currentTarget.dataset.id
+      url: "/pages/goods-details/goods-details?id=" + e.currentTarget.dataset.id
     })
   },
   toSearch: function (e) {
     console.log(e)
     wx.navigateTo({
-      url: '/pages/search/index?keyword=' + this.data.keyword,
+      url: '/pages/search/search?keyword=' + this.data.keyword,
     })
     console.log(e);
   },
@@ -185,7 +185,6 @@ Page({
   gitCoupon: function (e) {
     var that = this;
     var token = wx.getStorageSync('token');
-    console.log(e.currentTarget.dataset.id);
     wx.request({
       url: 'https://api.it120.cc/' + app.globalData.subDomain + '/discounts/fetch',
       data: {
@@ -254,7 +253,7 @@ Page({
             showCancel: false,
             success: () => {
               wx.navigateTo({
-                url: "/pages/authorize/index"
+                url: "/pages/authorize/authorize"
               })
             }
           })

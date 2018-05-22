@@ -8,16 +8,12 @@
 
   <view class="introduced">
     <wxc-loadmore class='introduced-text' is-end="{{true}}" text="店铺优惠券"></wxc-loadmore>
-    <!-- <image class="introudced-img" src="{{couponsTitlePicStr}}"></image> -->
   </view>
 
   
 
   <wxc-flex wx:if='{hasNoCoupons}' class='coupons' cross="center" wrap='wrap'>
     <wxc-toast wx:if="{{!networkStatus}}" is-show="{{true}}" text="联网失败，请刷新重试" icon="warning" icon-color="#ff5777"></wxc-toast>
-    <wxc-toast wx:if="{{couponsStatus===0}}" is-show="{{true}}" text="优惠券加载中···"></wxc-toast>
-    <wxc-toast wx:elif="{{couponsStatus===1}}" is-show="{{true}}" text="加载成功" icon="yes"></wxc-toast>
-    <wxc-toast wx:elif="{{couponsStatus===2}}" is-show="{{true}}" text="暂无优惠券可领" icon="no"></wxc-toast>
     <view class="coupons-item" wx:for-items="{{coupons}}" wx:for-index="idx" wx:key="id" bindtap="gitCoupon" data-id="{{item.id}}">
       <view class='coupons-date-money'>
         <view class='coupons-info'>
@@ -49,6 +45,5 @@
 
   <view class="introduced">
     <wxc-loadmore class='introduced-text' is-end="{{true}}" text="砍价"></wxc-loadmore>
-    <!-- <image class="introudced-img" src="{{couponsTitlePicStr}}"></image> -->
   </view>
 </view>

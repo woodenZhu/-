@@ -1,7 +1,6 @@
 {
   "navigationBarTitleText": "荔红",
-  "enablePullDownRefresh": true,
-  "backgroundColor": "#69C3AA",
+  "backgroundColor": "#f2f2f2",
   "usingComponents": {
     "wxc-icon": "../../dist/packages/@minui/wxc-icon/dist/index",
     "wxc-flex": "../../dist/packages/@minui/wxc-flex/dist/index",

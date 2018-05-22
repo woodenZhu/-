@@ -184,17 +184,17 @@ Page({
   },
   relogin:function(){
     wx.navigateTo({
-      url: "/pages/authorize/index"
+      url: "/pages/authorize/authorize"
     })
   },
   recharge: function () {
     wx.navigateTo({
-      url: "/pages/recharge/index"
+      url: "/pages/recharge/recharge"
     })
   },
   withdraw: function () {
     wx.navigateTo({
-      url: "/pages/withdraw/index"
+      url: "/pages/withdraw/withdraw"
     })
   }
 })

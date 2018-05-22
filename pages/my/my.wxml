@@ -5,19 +5,19 @@
 	</view>
   <!-- <view style="height:15rpx;background: #eee;width:100%;"></view> -->
   <view class="my-item">
-    <navigator url="/pages/order-list/index" hover-class="navigator-hover">
+    <navigator url="/pages/order-list/order-list" hover-class="navigator-hover">
       <wxc-icon type='feedback' size='45' color='#999999'></wxc-icon>
       <text class="text">我的订单</text> 
     </navigator>
   </view>
   <view class="my-item">
-    <navigator url="/pages/select-address/index" hover-class="navigator-hover">
+    <navigator url="/pages/select-address/select-address" hover-class="navigator-hover">
       <wxc-icon type='address' size='45' color='#999999'></wxc-icon>
       <text class="text">我的收货地址</text> 
     </navigator>
   </view>
   <view class="my-item">
-    <navigator url="/pages/mycoupons/index" hover-class="navigator-hover">
+    <navigator url="/pages/mycoupons/mycoupons" hover-class="navigator-hover">
       <wxc-icon type='coupon' size='45' color='#999999'></wxc-icon>
       <text class="text">我的优惠券</text> 
     </navigator>

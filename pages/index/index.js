@@ -24,12 +24,6 @@ Page({
     tuijian: '',
   },
 
-  tabClick: function (e) {
-    this.setData({
-      activeCategoryId: e.currentTarget.id
-    });
-    this.getGoodsList(this.data.activeCategoryId);
-  },
   //事件处理函数
   swiperchange: function(e) {
     // console.log(query.select('swiper'));
@@ -39,30 +33,13 @@ Page({
   },
   toDetailsTap:function(e){
     wx.navigateTo({
-      url:"/pages/goods-details/index?id="+e.currentTarget.dataset.id
+      url:"/pages/goods-details/goods-details?id="+e.currentTarget.dataset.id
     })
-  },
-  tapBanner: function(e) {
-    console.log(e);
-    if (e.currentTarget.dataset.id != 0) {
-      wx.navigateTo({
-        url: "/pages/goods-details/index?id=" + e.currentTarget.dataset.id
-      })
-    }
   },
   bindTypeTap: function(e) {
      this.setData({  
         selectCurrent: e.index  
     })  
-  },
-  scroll: function (e) {
-    //  console.log(e) ;
-    var that = this,scrollTop=that.data.scrollTop;
-    that.setData({
-      scrollTop:e.detail.scrollTop
-    })
-    // console.log('e.detail.scrollTop:'+e.detail.scrollTop) ;
-    // console.log('scrollTop:'+scrollTop)
   },
   onLoad: function () {
     var that = this
