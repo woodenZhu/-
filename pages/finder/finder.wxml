@@ -40,10 +40,31 @@
     <wxc-toast wx:elif="{{getCoupStatus===3}}" is-show="{{true}}" text="您的积分不足~" icon="no"></wxc-toast>
     <wxc-toast wx:elif="{{getCoupStatus===4}}" is-show="{{true}}" text="已过期~" icon="no"></wxc-toast>
     
-    <view style='width: 100%;height: 10rpx;'></view>
   </wxc-flex>
+  
+  <view style='width: 750rpx;height: 20rpx;background: #f2f2f2;'></view>
 
   <view class="introduced">
-    <wxc-loadmore class='introduced-text' is-end="{{true}}" text="砍价"></wxc-loadmore>
+    <wxc-loadmore class='introduced-text' is-end="{{true}}" text="砍价列表"></wxc-loadmore>
+  </view>
+  <view style="width: 750rpx;height: 2rpx;background: #f2f2f2;"></view>
+  <view style="width: 750rpx; height: 250rpx;background: #fff;border-bottom: thick #f2f2f2 solid;">
+    <wxc-flex>
+      <image style="height: 200rpx; width: 200rpx;padding-top: 25rpx;" src="../../images/more/start.png"></image>
+      <view>
+        <view style="padding-top: 25rpx;">白糖罂</view>
+        <wxc-flex>
+          <view style="padding-top: 25rpx;padding-right: 100rpx;">
+            <view style="color: red;padding">￥144</view>
+            <view>最低价</view>
+          </view>
+          <view style="padding-top: 25rpx;">
+            <view style="color: red;padding">￥168</view>
+            <view>原价</view>
+          </view>
+        </wxc-flex>
+      </view>
+
+    </wxc-flex>
   </view>
 </view>

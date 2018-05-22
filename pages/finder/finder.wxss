@@ -11,7 +11,7 @@ page {
 
 .container {
   min-height: 100%;
-  background-color: #69c3aa;
+  background-color: #f2f2f2;
 }
 
 .introduced {
