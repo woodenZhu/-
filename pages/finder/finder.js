@@ -1,7 +1,6 @@
 //index.js
 //获取应用实例
-var starscore = require("../../templates/starscore/starscore.js");
-var WxSearch = require('../../templates/wxSearch/wxSearch.js');
+
 var app = getApp()
 Page({
   data: {
@@ -21,14 +20,6 @@ Page({
     couponsStatus: 0,
     getCoupStatus: -1
   },
-  
-  onPullDownRefresh: function () {
-    var that = this
-    wx.showNavigationBarLoading()
-    that.onLoad()
-    wx.hideNavigationBarLoading() //完成停止加载
-    wx.stopPullDownRefresh() //停止下拉刷新
-  },
   onShareAppMessage: function () {
     return {
       title: wx.getStorageSync('mallName') + '——' + app.globalData.shareProfile,
@@ -47,12 +38,10 @@ Page({
   },
   onLoad: function () {
     var that = this
-    //初始化的时候渲染wxSearchdata 第二个为你的search高度
-    WxSearch.init(that, 43, app.globalData.hotGoods);
-    WxSearch.initMindKeys(app.globalData.goodsName);  //获取全部商品名称，做为智能联想输入库
 
     that.getCouponsTitlePicStr();
     that.getCoupons();
+    that.getKanjia();
   },
   getCouponsTitlePicStr: function () {
     var that = this;
@@ -78,18 +67,6 @@ Page({
     })
   },
   //事件处理函数
-  toDetailsTap: function (e) {
-    wx.navigateTo({
-      url: "/pages/goods-details/goods-details?id=" + e.currentTarget.dataset.id
-    })
-  },
-  toSearch: function (e) {
-    console.log(e)
-    wx.navigateTo({
-      url: '/pages/search/search?keyword=' + this.data.keyword,
-    })
-    console.log(e);
-  },
   getGoodsList: function (categoryId) {
     if (categoryId == 0) {
       categoryId = "";
@@ -261,48 +238,17 @@ Page({
       }
     })
   },
-
-  //////////////////////////////////////
-  wxSearchFn: function (e) {
-    var that = this
-    that.toSearch();
-    WxSearch.wxSearchAddHisKey(that);
-
-  },
-  wxSearchInput: function (e) {
-    var that = this
-    WxSearch.wxSearchInput(e, that);
-
-    that.setData({
-      keyword: that.data.wxSearchData.value,
+  getKanjia() {
+    wx.request({
+      url: 'https://api.it120.cc/' + app.globalData.subDomain + '/shop/goods/kanjia/list',
+      success: function(res) {
+        // console.log(res);
+      }
     })
   },
-  wxSerchFocus: function (e) {
-    var that = this
-    WxSearch.wxSearchFocus(e, that);
-  },
-  wxSearchBlur: function (e) {
-    var that = this
-    WxSearch.wxSearchBlur(e, that);
-  },
-  wxSearchKeyTap: function (e) {
-    var that = this
-    WxSearch.wxSearchKeyTap(e, that);
-
-    that.setData({
-      keyword: that.data.wxSearchData.value,
+  goKanJia: function() {
+    wx.navigateTo({
+      url: "/pages/kanjia/kanjia"
     })
-  },
-  wxSearchDeleteKey: function (e) {
-    var that = this
-    WxSearch.wxSearchDeleteKey(e, that);
-  },
-  wxSearchDeleteAll: function (e) {
-    var that = this;
-    WxSearch.wxSearchDeleteAll(that);
-  },
-  wxSearchTap: function (e) {
-    var that = this
-    WxSearch.wxSearchHiddenPancel(that);
   }
 })

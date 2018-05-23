@@ -57,6 +57,24 @@ App({
         }
       }
     })
+
+    // 获取access_token
+    // if(!wx.getStorageSync('access_token')) {
+      wx.request({
+        url: 'https://api.weixin.qq.com/cgi-bin/token',
+        data: {
+          grant_type: 'client_credential',
+          appid: 'wx7e082f6bc5caaad5',
+          secret: '97cfdd821f46b1e76c0a77dc4b407219'
+        },
+        success: function(res) {
+          if(res.errMsg == 'request:ok') {
+            wx.setStorageSync('access_token', res.data.access_token)
+          }
+        }
+      })
+    // }
+    
   },
   sendTempleMsg: function (orderId, trigger, template_id, form_id, page, postJsonString){
     var that = this;
@@ -112,7 +130,7 @@ App({
     userInfo:null,
     subDomain: "guoyz", // 如果你的域名是： https://api.it120.cc/abcd 那么这里只要填写 abcd
     version: "2.0",
-    shareProfile: '百款精品商品，总有一款适合您' // 首页转发的时候话术
+    shareProfile: '荔红商城荔荔鲜' // 首页转发的时候话术
   }
   /*
   根据自己需要修改下单时候的模板消息内容设置，可增加关闭订单、收货时候模板消息提醒；

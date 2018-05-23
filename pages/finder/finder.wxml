@@ -48,9 +48,9 @@
     <wxc-loadmore class='introduced-text' is-end="{{true}}" text="砍价列表"></wxc-loadmore>
   </view>
   <view style="width: 750rpx;height: 2rpx;background: #f2f2f2;"></view>
-  <view style="width: 750rpx; height: 250rpx;background: #fff;border-bottom: thick #f2f2f2 solid;">
+  <view style="width: 750rpx; height: 250rpx;background: #fff;border-bottom: thick #f2f2f2 solid;" bindtap="goKanJia">
     <wxc-flex>
-      <image style="height: 200rpx; width: 200rpx;padding-top: 25rpx;" src="../../images/more/start.png"></image>
+      <!-- <image style="height: 200rpx; width: 200rpx;padding-top: 25rpx;" src="../../images/more/start.png"></image> -->
       <view>
         <view style="padding-top: 25rpx;">白糖罂</view>
         <wxc-flex>
@@ -64,7 +64,6 @@
           </view>
         </wxc-flex>
       </view>
-
     </wxc-flex>
   </view>
 </view>

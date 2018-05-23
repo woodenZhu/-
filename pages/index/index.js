@@ -121,4 +121,19 @@ Page({
       }
     }
   },
+  createShare: function() {
+    wx.request({
+      url: 'https://api.it120.cc/guoyz/qrcode/wxa/unlimit',
+      data: {
+        scene:'zhuanfa',
+        path: '/pages/finder/finder'
+      },
+      success: function(res) {
+        console.log(res);
+      },
+      fail: function(res) {
+        console.log(res);
+      }
+    })
+  }
 })

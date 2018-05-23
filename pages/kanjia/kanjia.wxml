@@ -1,52 +1,34 @@
-<import src="../../wxParse/wxParse.wxml" />
-<view class="container"> 
-   <view class="swiper-container" wx:if="{{!goodsDetail.basicInfo.videoId}}">
-        <swiper class="swiper_box" 
-                    autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" bindchange="swiperchange">
-            <block wx:for="{{goodsDetail.pics}}" wx:key="id">
-                <swiper-item>
-                    <image src="{{item.pic}}_m" class="slide-image" width="355" height="150" mode="aspectFit" lazy-load="true"/>
-                </swiper-item>
-            </block>
-        </swiper>
-        <view class="dots">  
-            <block wx:for="{{goodsDetail.pics}}" wx:key="unique">  
-                <view class="dot{{index == swiperCurrent ? ' active' : ''}}"></view>  
-            </block>  
-        </view>  
-   </view>
-   <view class="swiper-container" wx:if="{{goodsDetail.basicInfo.videoId}}">
-        <video src="{{videoMp4Src}}" autoplay="true" loop="true" style='width:100%'></video>
-   </view>
-   <view class="goods-info">
-        <view class="goods-title">{{goodsDetail.basicInfo.name}}</view>
-        <view class="goods-price" style="padding-left:35rpx;">当前价格: ¥ {{kanjiaInfo.kanjiaInfo.curPrice}} , 底价 ¥ {{kanjiaInfo.kanjiaInfo.minPrice}} </view>
-        <view class="goods-price" style="color:#999;font-size:24rpx;padding-left:10rpx;"> (转发帮 {{kanjiaInfo.joiner.nick}} 砍价) </view>
-    </view>
-    <view class="goods-des-info">
-        <view class="label-title">商品介绍</view>
-        <view class="goods-text">
-            <template is="wxParse" data="{{wxParseData:article.nodes}}"/>
-         </view>
-    </view>
-    <view class="goods-des-info" style="margin-top:35rpx;" wx:if="{{kanjiaInfo.helps}}">
-        <view class="label-title" style="border-bottom:1px solid #eee;">砍价记录<text style="color:red">（{{kanjiaInfo.kanjiaInfo.helpNumber}}）</text></view>
-        <view class="goods-text" style="margin-top:15rpx;" wx:for="{{kanjiaInfo.helps}}" wx:key="id">
-          <view style="width:100rpx;float:left;">
-            <image style="width: 100rpx; height: 100rpx;" src="{{item.avatarUrl}}"></image>
-            <view style="text-align:center;width:100rpx;"> </view>
+<view class="container">
+  <image style="position: absolute;top: 0; left: 0;width: 50rpx;height: 50rpx;" src="../../images/more/index.png"></image>
+  <view class="userinfo">
+    <image wx:if="{{userInfo && userInfo.avatarUrl}}" class="userinfo-avatar" src="{{ userInfo.avatarUrl }}" background-size="cover"></image>
+    <text class="userinfo-nickname">{{ userInfo.nickName }}</text>
+
+    <text>来帮我砍到最低价吧~</text>
+
+    <view style="display: flex;flex-direction: horizontal;">
+      <image style="width: 100rpx;height: 100rpx;background-color: red;"></image>
+      <view>
+          <view>组合套装</view>
+          <view>
+            <text style="margin-right: 10rpx;">底价 ￥148</text>
+            <text>原价 ￥109</text>
           </view>
-          <view style="width:550rpx;float:left;margin-left:35rpx;border-bottom:1px solid #eee;">
-            <view>{{item.nick}} 帮忙砍掉 <text style="color: red">{{item.cutPrice}}</text> 元</view>
-            <view style="color: #B0B0B0;font-size:24rpx;">{{item.dateAdd}}</view>
-          </view>
-        </view>
+      </view>
     </view>
-    <view class="footer-box">        
-        <view class="now-buy" bindtap="helpKanjia" wx:if="{{!kanjiaInfoMyHelp}}">帮忙砍一刀</view>
-        <view class="now-buy-no" wx:if="{{kanjiaInfoMyHelp && kanjiaInfo&& kanjiaInfo.kanjiaInfo.uid != curuid}}">您已砍 {{kanjiaInfoMyHelp.cutPrice}} 元</view>
-        <view class="now-buy-no" wx:if="{{kanjiaInfoMyHelp && kanjiaInfo&& kanjiaInfo.kanjiaInfo.uid == curuid}}">
-          <view class="now-buy" bindtap="tobuy" style='margin-left:0;width:750rpx;'>以当前价购买</view>
-        </view>
-   </view>
+
+    <view>
+      <text>当前价 200.</text>
+      <text>已砍 100</text>
+    </view>
+
+    <view style="display: flex;flex-direction: horizontal;">
+      <text style="margin-right: 10rpx;">以当前价购买</text>
+      <text>邀请好友砍价</text>
+    </view>
+
+    <view></view>
+  </view>
+
+
 </view>

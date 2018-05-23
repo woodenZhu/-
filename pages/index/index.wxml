@@ -32,3 +32,4 @@
   </block>
   
 </view>
+<button bindtap="createShare">生成小程序码</button>

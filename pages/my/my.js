@@ -17,7 +17,7 @@ Page({
     let userInfo = wx.getStorageSync('userInfo')
     if (!userInfo) {
       wx.navigateTo({
-        url: "/pages/authorize/index"
+        url: "/pages/authorize/authorize"
       })
     } else {
       that.setData({

@@ -70,6 +70,7 @@ Page({
     }
     wx.setStorageSync('userInfo', e.detail.userInfo)
     this.login();
+    console.log("login");
   },
   login: function () {
     let that = this;
