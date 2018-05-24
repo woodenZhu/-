@@ -102,6 +102,11 @@ Page({
         }
         for(var i=0;i<res.data.data.length;i++){
           goods.push(res.data.data[i]);
+          var itemId = res.data.data[i].id;
+          var itemName = res.data.data[i].name;
+          var itemPic = res.data.data[i].pic;
+          wx.setStorageSync(itemId.toString(), itemName);
+          wx.setStorageSync(itemId + 'pic', itemPic);
         }
         that.setData({
           goods:goods,

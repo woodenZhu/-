@@ -18,7 +18,8 @@ Page({
     coupons: [],
     networkStatus: true, //正常联网
     couponsStatus: 0,
-    getCoupStatus: -1
+    getCoupStatus: -1,
+    kanJiaList: []
   },
   onShareAppMessage: function () {
     return {
@@ -239,16 +240,28 @@ Page({
     })
   },
   getKanjia() {
+    var that = this;
     wx.request({
-      url: 'https://api.it120.cc/' + app.globalData.subDomain + '/shop/goods/kanjia/list',
+      url: 'https://api.it120.cc/'+ app.globalData.subDomain +'/shop/goods/kanjia/list',
       success: function(res) {
-        // console.log(res);
+        console.log(res);
+        var kanJiaList = [];
+        for(var i = 0; i < res.data.data.result.length; i++) {
+          var item = res.data.data.result[i];
+          item.name = wx.getStorageSync(item.goodsId.toString());
+          item.pic = wx.getStorageSync(item.goodsId + 'pic');
+          kanJiaList.push(item);
+        }
+        that.setData({
+          kanJiaList: kanJiaList
+        })
       }
     })
   },
-  goKanJia: function() {
+  goKanJia: function(e) {
+    var kjid = e.currentTarget.dataset.id;
     wx.navigateTo({
-      url: "/pages/kanjia/kanjia"
+      url: '/pages/kanjia/kanjia?kjid=' + e.currentTarget.dataset.id
     })
   }
 })

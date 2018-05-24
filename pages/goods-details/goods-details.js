@@ -90,7 +90,7 @@ Page({
   },
   goShopCar: function () {
     wx.reLaunch({
-      url: "/pages/shop-cart/index"
+      url: "/pages/shop-cart/shop-cart"
     });
   },
   toAddShopCar: function () {
@@ -303,7 +303,7 @@ Page({
     this.closePopupTap();
 
     wx.navigateTo({
-      url: "/pages/to-pay-order/index?orderType=buyNow"
+      url: "/pages/to-pay-order/to-pay-order?orderType=buyNow"
     })    
   },
   /**
@@ -380,22 +380,6 @@ Page({
     if (!buyNowInfo.shopList) {
       buyNowInfo.shopList = [];
     }
-    /*    var hasSameGoodsIndex = -1;
-        for (var i = 0; i < toBuyInfo.shopList.length; i++) {
-          var tmpShopCarMap = toBuyInfo.shopList[i];
-          if (tmpShopCarMap.goodsId == shopCarMap.goodsId && tmpShopCarMap.propertyChildIds == shopCarMap.propertyChildIds) {
-            hasSameGoodsIndex = i;
-            shopCarMap.number = shopCarMap.number + tmpShopCarMap.number;
-            break;
-          }
-        }
-        toBuyInfo.shopNum = toBuyInfo.shopNum + this.data.buyNumber;
-        if (hasSameGoodsIndex > -1) {
-          toBuyInfo.shopList.splice(hasSameGoodsIndex, 1, shopCarMap);
-        } else {
-          toBuyInfo.shopList.push(shopCarMap);
-        }*/
-
     buyNowInfo.shopList.push(shopCarMap);
     buyNowInfo.kjId = this.data.kjId;
     return buyNowInfo;
@@ -403,7 +387,7 @@ Page({
   onShareAppMessage: function () {
     return {
       title: this.data.goodsDetail.basicInfo.name,
-      path: '/pages/goods-details/index?id=' + this.data.goodsDetail.basicInfo.id + '&inviter_id=' + app.globalData.uid,
+      path: '/pages/goods-details/goods-details?id=' + this.data.goodsDetail.basicInfo.id + '&inviter_id=' + app.globalData.uid,
       success: function (res) {
         // 转发成功
       },
@@ -429,68 +413,9 @@ Page({
       }
     })
   },
-  getVideoSrc: function (videoId) {
-    var that = this;
-    wx.request({
-      url: 'https://api.it120.cc/' + app.globalData.subDomain + '/media/video/detail',
-      data: {
-        videoId: videoId
-      },
-      success: function (res) {
-        if (res.data.code == 0) {
-          that.setData({
-            videoMp4Src: res.data.data.fdMp4
-          });
-        }
-      }
+  goToIndex: function() {
+    wx.reLaunch({
+      url: "/pages/index/index"
     })
-  },
-  getKanjiaInfo: function (gid) {
-    var that = this;
-    if (!app.globalData.kanjiaList || app.globalData.kanjiaList.length == 0){
-      that.setData({
-        curGoodsKanjia: undefined
-      });
-      return;
-    }
-    let curGoodsKanjia = app.globalData.kanjiaList.find(ele => {
-      return ele.goodsId == gid
-    });
-    if (curGoodsKanjia) {
-      that.setData({
-        curGoodsKanjia: curGoodsKanjia
-      });
-    } else {
-      that.setData({
-        curGoodsKanjia: undefined
-      });
-    }
-  },
-  goKanjia: function () {
-    var that = this;
-    if (!that.data.curGoodsKanjia) {
-      return;
-    }
-    wx.request({
-      url: 'https://api.it120.cc/' + app.globalData.subDomain + '/shop/goods/kanjia/join',
-      data: {
-        kjid: that.data.curGoodsKanjia.id,
-        token: app.globalData.token
-      },
-      success: function (res) {
-        if (res.data.code == 0) {
-          console.log(res.data);
-          wx.navigateTo({
-            url: "/pages/kanjia/index?kjId=" + res.data.data.kjId + "&joiner=" + res.data.data.uid + "&id=" + res.data.data.goodsId
-          })
-        } else {
-          wx.showModal({
-            title: '错误',
-            content: res.data.msg,
-            showCancel: false
-          })
-        }
-      }
-    })
-  },
+  }
 })

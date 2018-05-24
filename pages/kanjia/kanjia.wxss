@@ -28,6 +28,6 @@ page {
 }
 
 .userinfo-nickname {
-  margin-top: 20rpx;
+  margin-top: 15rpx;
   color: black;
 }

@@ -48,19 +48,22 @@
     <wxc-loadmore class='introduced-text' is-end="{{true}}" text="砍价列表"></wxc-loadmore>
   </view>
   <view style="width: 750rpx;height: 2rpx;background: #f2f2f2;"></view>
-  <view style="width: 750rpx; height: 250rpx;background: #fff;border-bottom: thick #f2f2f2 solid;" bindtap="goKanJia">
+  <view wx:for="{{kanJiaList}}" style="width: 750rpx; height: 250rpx;background: #fff;border-bottom: thick #f2f2f2 solid;">
     <wxc-flex>
-      <!-- <image style="height: 200rpx; width: 200rpx;padding-top: 25rpx;" src="../../images/more/start.png"></image> -->
+      <image mode="aspectFill" style="height: 200rpx; width: 200rpx;padding-top: 25rpx;" src="{{item.pic}}"></image>
       <view>
-        <view style="padding-top: 25rpx;">白糖罂</view>
-        <wxc-flex>
-          <view style="padding-top: 25rpx;padding-right: 100rpx;">
-            <view style="color: red;padding">￥144</view>
+        <view style="padding-top: 25rpx; padding-left: 20rpx; height: 20%;">{{item.name}}</view>
+        <wxc-flex style="height: 80%;font-size: 28rpx;">
+          <view style="padding: 25rpx 100rpx 0 20rpx;width: 40%;">
+            <view style="color: red;padding">￥{{item.minPrice}}</view>
             <view>最低价</view>
           </view>
-          <view style="padding-top: 25rpx;">
-            <view style="color: red;padding">￥168</view>
+          <view style="padding-top: 25rpx;color: gray;width: 40%;">
+            <view>￥{{item.originalPrice}}</view>
             <view>原价</view>
+          </view>
+          <view style="width: 20%;text-align: right;">
+            <view data-id="{{item.id}}" class="kaikan" bindtap="goKanJia">开砍</view>
           </view>
         </wxc-flex>
       </view>

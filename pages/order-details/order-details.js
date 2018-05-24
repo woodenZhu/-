@@ -98,7 +98,7 @@ Page({
   wuliuDetailsTap: function (e) {
     var orderId = e.currentTarget.dataset.id;
     wx.navigateTo({
-      url: "/pages/wuliu/index?id=" + orderId
+      url: "/pages/wuliu/wuliu?id=" + orderId
     })
   },
   confirmBtnTap: function (e) {

@@ -130,7 +130,7 @@ Page({
   orderDetail: function (e) {
     var orderId = e.currentTarget.dataset.id;
     wx.navigateTo({
-      url: "/pages/order-details/index?id=" + orderId
+      url: "/pages/order-details/order-details?id=" + orderId
     })
   },
   cancelOrderTap: function (e) {
@@ -195,7 +195,7 @@ Page({
               }
             })
           } else {
-            wxpay.wxpay(app, money, orderId, "/pages/ucenter/order-list/index");
+            wxpay.wxpay(app, money, orderId, "/pages/order-list/order-list");
           }
         } else {
           wx.showModal({
@@ -295,7 +295,7 @@ Page({
   },
   toIndexPage: function () {
     wx.switchTab({
-      url: "/pages/classification/index"
+      url: "/pages/index/index"
     });
   },
 })
