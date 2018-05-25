@@ -7,12 +7,12 @@
     <text>来帮我砍到最低价吧~</text>
 
     <view style="display: flex;flex-direction: horizontal;">
-      <image style="width: 100rpx;height: 100rpx;background-color: red;"></image>
+      <image mode="aspectFill" src="{{itemInfo.pic}}" style="width: 100rpx;height: 100rpx;background-color: red;"></image>
       <view>
-          <view>组合套装</view>
+          <view>{{itemInfo.name}}</view>
           <view>
-            <text style="margin-right: 10rpx;">底价 ￥148</text>
-            <text>原价 ￥109</text>
+            <text style="margin-right: 10rpx;">底价 ￥{{itemInfo.minPrice}}</text>
+            <text>原价 ￥{{itemInfo.originalPrice}}</text>
           </view>
       </view>
     </view>
@@ -23,7 +23,8 @@
     </view>
 
     <view style="display: flex;flex-direction: horizontal;">
-      <text style="margin-right: 10rpx;">以当前价购买</text>
+      <text style="margin-right: 10rpx;" bindtap="kanjia">砍一刀</text>
+      <text style="margin-right: 10rpx;display: none;">以当前价购买</text>
       <text>邀请好友砍价</text>
     </view>
 

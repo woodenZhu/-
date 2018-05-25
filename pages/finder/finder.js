@@ -259,9 +259,18 @@ Page({
     })
   },
   goKanJia: function(e) {
-    var kjid = e.currentTarget.dataset.id;
-    wx.navigateTo({
-      url: '/pages/kanjia/kanjia?kjid=' + e.currentTarget.dataset.id
-    })
+    var kjid = e.currentTarget.dataset.kjid;
+    var goodsid = e.currentTarget.dataset.goodsid
+    if(!wx.getStorageSync('token')) {
+      wx.navigateTo({
+        url: "/pages/authorize/authorize"
+      })
+    }else {
+      var token = wx.getStorageSync('token');
+      var userInfo = JSON.stringify(wx.getStorageSync('userInfo'));
+      wx.navigateTo({
+        url: '/pages/kanjia/kanjia?kjid=' + kjid + '&token=' + token + '&userInfo=' + userInfo + '&goodsid=' + goodsid
+      })
+    }
   }
 })
