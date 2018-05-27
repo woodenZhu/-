@@ -116,7 +116,6 @@ Page({
         if (res.data.code == 0) {
           that.setData({
             apiUserInfoMap: res.data.data,
-            userMobile: res.data.data.base.mobile
           });
         }
       }

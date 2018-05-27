@@ -14,20 +14,21 @@ page {
   padding: 50rpx 0;
   align-items: center;
   /*background: #e85654;*/
-  background: rgba(232,86,84,0.3);
+  background: rgba(232,86,84,0.9);
   /*background: linear-gradient(#e85654, #fff);  */
   width: 750rpx;
-  height: 60%;
+  height: 55%;
 }
 
 .userinfo-avatar {
-  width: 160rpx;
-  height: 160rpx;
-  margin: 20rpx;
+  width: 150rpx;
+  height: 150rpx;
+  /*margin: 20rpx;*/
   border-radius: 50%;
 }
 
 .userinfo-nickname {
-  margin-top: 15rpx;
-  color: black;
+  /*margin-top: 15rpx;*/
+  font-size: 30rpx;
+  color: #fff;
 }

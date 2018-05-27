@@ -1,6 +1,6 @@
 <!--index.wxml-->
 <!--1px = 750/320 = 2.34rpx;-->
-<view class="container" style="display: none;">
+<view class="container">
 
   <view class="remind-box" wx:if="{{remind}}">
     <image class="remind-img" src="/images/more/loading.gif"></image>
@@ -24,7 +24,7 @@
           </view>
           <view class="title">{{item.name}}</view>
           <view class="flex-wrp">
-            <view class="price">¥ {{item.minPrice}}</view>
+            <view class="price">¥ {{item.originalPrice}}</view>
           </view>
         </view>
       </swiper-item>
@@ -32,4 +32,4 @@
   </block>
   
 </view>
-<button bindtap="createShare">生成小程序码</button>
+<!-- <button bindtap="createShare">生成小程序码</button> -->

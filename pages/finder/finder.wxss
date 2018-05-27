@@ -170,10 +170,10 @@ page {
   background:#e64340;
   border-radius:6px;
   width:100rpx;
-  margin-top: 55rpx;
-  margin-right: 20rpx;
-  height:70rpx;
-  line-height: 70rpx;
+  /*margin-top: 55rpx;
+  margin-right: 20rpx;*/
+  height:50rpx;
+  line-height: 50rpx;
   text-align: center;
   font-size:28rpx;
 }

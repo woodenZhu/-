@@ -86,7 +86,6 @@ Page({
       }
     })
     this.reputation(e.id);
-    this.getKanjiaInfo(e.id);
   },
   goShopCar: function () {
     wx.reLaunch({

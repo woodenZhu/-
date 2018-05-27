@@ -39,7 +39,7 @@ Page({
   },
   toFindPage: function() {
     wx.switchTab({
-      url: "/pages/finder/index"
+      url: "/pages/finder/finder"
     });
   }
 

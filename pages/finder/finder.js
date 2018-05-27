@@ -57,13 +57,7 @@ Page({
           that.setData({
             couponsTitlePicStr: res.data.data.value
           })
-          console.log('couponsTitlePicStr------------------')
-          console.log(res.data.data.value)
-          console.log('ok')
         }
-      },
-      fail: function () {
-        console.log('fail')
       },
     })
   },
@@ -72,7 +66,6 @@ Page({
     if (categoryId == 0) {
       categoryId = "";
     }
-    console.log(categoryId)
     var that = this;
     wx.request({
       url: 'https://api.it120.cc/' + app.globalData.subDomain + '/shop/goods/list',
@@ -99,20 +92,11 @@ Page({
         for (var i = 0; i < res.data.data.length; i++) {
           goods.push(res.data.data[i]);
         }
-
-
-        console.log('getGoodsList----------------------')
-        console.log(goods)
-
-
         for (let i = 0; i < goods.length; i++) {
           goods[i].starscore = (goods[i].numberGoodReputation / goods[i].numberOrders) * 5
           goods[i].starscore = Math.ceil(goods[i].starscore / 0.5) * 0.5
           goods[i].starpic = starscore.picStr(goods[i].starscore)
         }
-        console.log('getGoodsReputation----------------------')
-        console.log(goods)
-
       }
     })
   },
@@ -170,7 +154,6 @@ Page({
         token: token
       },
       success: function (res) {
-        console.log(res);
         if (res.data.code == 20001 || res.data.code == 20002) {
           that.setData({
             getCoupStatus: 0
@@ -244,7 +227,6 @@ Page({
     wx.request({
       url: 'https://api.it120.cc/'+ app.globalData.subDomain +'/shop/goods/kanjia/list',
       success: function(res) {
-        console.log(res);
         var kanJiaList = [];
         for(var i = 0; i < res.data.data.result.length; i++) {
           var item = res.data.data.result[i];
@@ -266,10 +248,21 @@ Page({
         url: "/pages/authorize/authorize"
       })
     }else {
-      var token = wx.getStorageSync('token');
-      var userInfo = JSON.stringify(wx.getStorageSync('userInfo'));
-      wx.navigateTo({
-        url: '/pages/kanjia/kanjia?kjid=' + kjid + '&token=' + token + '&userInfo=' + userInfo + '&goodsid=' + goodsid
+      wx.request({
+        url: 'https://api.it120.cc/' + app.globalData.subDomain + '/shop/goods/kanjia/join',
+        data: {
+          kjid: kjid,
+          token: wx.getStorageSync('token')
+        },
+        success: function(res) {
+          var token = wx.getStorageSync('token');
+          var userInfo = JSON.stringify(wx.getStorageSync('userInfo'));
+          var userid = res.data.data.uid;
+          wx.setStorageSync('userid', userid.toString());
+          wx.navigateTo({
+            url: '/pages/kanjia/kanjia?kjid='+kjid+'&token='+token+'&userInfo='+userInfo+'&goodsid='+goodsid+'&userid='+userid
+          })
+        }
       })
     }
   }
