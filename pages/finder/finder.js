@@ -258,7 +258,6 @@ Page({
           var token = wx.getStorageSync('token');
           var userInfo = JSON.stringify(wx.getStorageSync('userInfo'));
           var userid = res.data.data.uid;
-          wx.setStorageSync('userid', userid.toString());
           wx.navigateTo({
             url: '/pages/kanjia/kanjia?kjid='+kjid+'&token='+token+'&userInfo='+userInfo+'&goodsid='+goodsid+'&userid='+userid
           })

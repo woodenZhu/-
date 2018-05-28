@@ -19,17 +19,14 @@ Page({
       wx.navigateTo({
         url: "/pages/authorize/authorize"
       })
-    }else {
-      if(!wx.getStorageSync('userid')) {
-        that.joinKanjia();
-      }
-      this.getItemInfo();
+    }
+
       // this.getKanjiaInfo();
       // this.joinKanjia();
       // this.kanjia();
-    }
   },
   onShow: function() {
+    this.getItemInfo();
   },
   goToIndex: function() {
     wx.reLaunch({
@@ -73,6 +70,7 @@ Page({
         token: wx.getStorageSync('token')
       },
       success: function(res) {
+        console.log(res.data.data.uid)
         wx.setStorageSync('userid', res.data.data.uid.toString());
       }
     })
@@ -89,16 +87,21 @@ Page({
       },
       success: function(res) {
         var helpers = res.data.data.helps;
+
         var currentNickName = wx.getStorageSync('userInfo').nickName;
         var kjMesg = '', kjTap = '';
         var originalPrice = that.data.itemInfo.originalPrice;
         var curPrice = res.data.data.kanjiaInfo.curPrice;
         var cutPrice = that.subtr(originalPrice, curPrice);
+        wx.showModal({
+          title: helpers.length.toString(),
+          content: 'curPrice: ' + curPrice + ' and cutPrice: ' + cutPrice
+        })
         for(var i = 0; i < helpers.length; i++){
           if(currentNickName == helpers[i].nick) {
             if(currentNickName == sourceNickName){
               kjMesg = '以当前价格购买';
-              kjTap = 'goToPay';
+              kjTap = 'kanjia';
             }else {
               kjMesg = '已帮好友砍' + helpers[i].cutPrice + '元';
             }
@@ -120,21 +123,21 @@ Page({
     
   },
   kanjia: function() {
-    alert('yes');
     var that = this;
     var token = that.data.option.token;
     var kjid = that.data.kjid;
     var joinerUser = that.data.currentId;
-    var sourceId = that.data.sourceId;
     wx.request({
       url: 'https://api.it120.cc/' + app.globalData.subDomain + '/shop/goods/kanjia/help',
       data: {
         token: that.data.option.token,
         kjid: that.data.option.kjid,
-        joinerUser: wx.getStorageSync('userid')
+        joinerUser: wx.getStorageSync('uid')
       },
       success: function(res) {
-        console.log(res);
+        wx.showModal({
+          content: res.data.data.cutPrice.toString()
+        })
         that.getKanjiaInfo()
       },
     })
