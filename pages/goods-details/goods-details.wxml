@@ -22,7 +22,7 @@
         <view class="goods-title">{{goodsDetail.basicInfo.name}}</view>
     <view class="goods-price" style="padding-left:35rpx;">¥ {{selectSizePrice}}</view>
         <view class="goods-price" style="color:#999;font-size:24rpx;">购买{{goodsDetail.basicInfo.numberOrders}}次</view>
-        <view class="goods-price" style="color:#999;font-size:24rpx;">共收到 {{goodsDetail.basicInfo.numberGoodReputation}} 次好评</view>
+        <!-- <view class="goods-price" style="color:#999;font-size:24rpx;">共收到 {{goodsDetail.basicInfo.numberGoodReputation}} 次好评</view> -->
         
    </view>
    <view wx:if="{{hasMoreSelect}}" class="row-arrow" bindtap="bindGuiGeTap">

@@ -67,7 +67,7 @@ Page({
           that.setData({
             hasMoreSelect:true,
             selectSize:that.data.selectSize + selectSizeTemp,
-            selectSizePrice:res.data.data.basicInfo.minPrice,
+            selectSizePrice:res.data.data.basicInfo.originalPrice,
             totalScoreToPay: res.data.data.basicInfo.minScore
           });
         }

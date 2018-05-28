@@ -20,13 +20,17 @@ Page({
         url: "/pages/authorize/authorize"
       })
     }
-
       // this.getKanjiaInfo();
       // this.joinKanjia();
       // this.kanjia();
   },
   onShow: function() {
-    this.getItemInfo();
+    if(wx.getStorageSync('token') === this.data.option.token) {
+      this.joinKanjia();
+    }else {
+      this.getItemInfo();
+    }
+    
   },
   goToIndex: function() {
     wx.reLaunch({
@@ -64,14 +68,24 @@ Page({
   joinKanjia: function() {
     var that = this;
     wx.request({
-      url: 'https://api.it120.cc/' + app.globalData.subDomain + '/shop/goods/kanjia/join',
+      url: 'https://api.it120.cc/' + app.globalData.subDomain + '/shop/goods/kanjia/my',
       data: {
         kjid: that.data.option.kjid,
         token: wx.getStorageSync('token')
       },
       success: function(res) {
-        console.log(res.data.data.uid)
-        wx.setStorageSync('userid', res.data.data.uid.toString());
+        if(res.data.code == 700) {
+          wx.request({
+            url: 'https://api.it120.cc/' + app.globalData.subDomain + '/shop/goods/kanjia/join',
+            data: {
+              kjid: that.data.option.kjid,
+              token: wx.getStorageSync('token')
+            },
+            success: function(res) {
+              this.getItemInfo();
+            }
+          })
+        }
       }
     })
   },
