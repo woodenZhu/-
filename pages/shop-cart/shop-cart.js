@@ -368,7 +368,7 @@ Page({
     navigateToPayOrder:function () {
       wx.hideLoading();
       wx.navigateTo({
-        url:"/pages/to-pay-order/index"
+        url:"/pages/to-pay-order/to-pay-order"
       })
     }
 

@@ -59,6 +59,7 @@ Page({
         id: e.id
       },
       success: function(res) {
+        console.log(res);
         var selectSizeTemp = "";
         if (res.data.data.properties) {
           for(var i=0;i<res.data.data.properties.length;i++){
@@ -77,7 +78,7 @@ Page({
         }
         that.setData({
           goodsDetail:res.data.data,
-          selectSizePrice:res.data.data.basicInfo.minPrice,
+          selectSizePrice:res.data.data.basicInfo.originalPrice,
           totalScoreToPay: res.data.data.basicInfo.minScore,
           buyNumMax:res.data.data.basicInfo.stores,
           buyNumber:(res.data.data.basicInfo.stores>0) ? 1: 0
@@ -200,8 +201,9 @@ Page({
           propertyChildIds:propertyChildIds
         },
         success: function(res) {
+          console.log(res)
           that.setData({
-            selectSizePrice:res.data.data.price,
+            selectSizePrice:res.data.data.originalPrice,
             totalScoreToPay: res.data.data.score,
             propertyChildIds:propertyChildIds,
             propertyChildNames:propertyChildNames,
