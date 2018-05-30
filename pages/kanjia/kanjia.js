@@ -103,26 +103,41 @@ Page({
       },
       success: function(res) {
         var helpers = res.data.data.helps;
-        var kjMesg = '', kjTap = '';
+        var kjMesg = '', kjTap = '', invite = '', inviteTap = '';
         var originalPrice = that.data.itemInfo.originalPrice;
         var curPrice = res.data.data.kanjiaInfo.curPrice;
         var cutPrice = that.subtr(originalPrice, curPrice);
         for(var i = 0; i < helpers.length; i++){
           if(currentNickName == helpers[i].nick) {
             if(currentNickName == sourceNickName){
+              invite = '邀请好友砍价';
               kjMesg = '以当前价格购买';
-              kjTap = 'kanjia';
+              kjTap = 'goToPay';
+              inviteTap = 'inviteKanjia';
             }else {
               kjMesg = '已帮好友砍' + helpers[i].cutPrice + '元';
+              kjTap = '';
+              invite = '我也要砍价';
+              inviteTap = 'goToKanjia';
             }
             break;
           }
         }
         if(i == helpers.length) {
-          kjMesg = currentNickName == sourceNickName ? '自己砍一刀' : '帮好友砍一刀';
-          kjTap = 'kanjia';
+          if(currentNickName == sourceNickName) {
+            kjMesg = '自己砍一刀';
+            kjTap = 'kanjia';
+            invite = '邀请好友砍价';
+            inviteTap = 'inviteKanjia';
+          }else {
+            kjMesg = '帮好友砍一刀';
+            kjTap = 'kanjia';
+            invite = '我也要砍价';
+            inviteTap = 'goToKanjia';
+          }
         }
         that.setData({
+          invite: invite,
           kjMesg: kjMesg,
           kjTap: kjTap,
           currentPrice: res.data.data.kanjiaInfo.curPrice,
@@ -145,12 +160,37 @@ Page({
         joinerUser: that.data.option.userid
       },
       success: function(res) {
+        if(res.data.code == 30000) {
+          wx.showModal({
+            title: '提示',
+            content: '暂无该砍价记录',
+            showCancel: false
+          })
+        }else if(res.data.code == 30001) {
+          wx.showModal({
+            title: '提示',
+            content: '已砍到底价',
+            showCancel: false
+          })
+        }else if(res.data.code == 30002) {
+          wx.showModal({
+            title: '提示',
+            content: '活动已结束',
+            showCancel: false
+          })
+        }
         that.getKanjiaInfo()
       },
     })
   },
   goToPay: function() {
     console.log("goToPay");
+  },
+  inviteKanjia: function() {
+
+  },
+  goToKanjia: function() {
+
   },
   subtr: function(arg1, arg2) {
     var r1,r2,m,n; 
@@ -159,5 +199,8 @@ Page({
     m=Math.pow(10,Math.max(r1,r2)); 
     n=(r1>=r2)?r1:r2; 
     return ((arg1*m-arg2*m)/m).toFixed(n); 
+  },
+  endcount: function() {
+    console.log("endcount");
   }
 })
