@@ -165,13 +165,16 @@ Page({
     var orderId = e.currentTarget.dataset.id;
     var money = e.currentTarget.dataset.money;
     var token = wx.getStorageSync('token');
+    console.log(orderId)
+    console.log(money)
+    console.log(token)
     //wxpay.wxpay(app, money, orderId, "/pages/order-list/index");
     wx.request({
       url: 'https://api.it120.cc/' + app.globalData.subDomain + '/user/amount',
       data: {
         token: token
       },
-      success: function (res) {
+      success: function (res) {;
         if (res.data.code == 0) {
           // res.data.data.balance
           money = money - res.data.data.balance;

@@ -82,9 +82,11 @@ Page({
               token: wx.getStorageSync('token')
             },
             success: function(res) {
-              this.getItemInfo();
+              that.getItemInfo();
             }
           })
+        }else {
+          that.getItemInfo();
         }
       }
     })
@@ -101,16 +103,10 @@ Page({
       },
       success: function(res) {
         var helpers = res.data.data.helps;
-
-        var currentNickName = wx.getStorageSync('userInfo').nickName;
         var kjMesg = '', kjTap = '';
         var originalPrice = that.data.itemInfo.originalPrice;
         var curPrice = res.data.data.kanjiaInfo.curPrice;
         var cutPrice = that.subtr(originalPrice, curPrice);
-        wx.showModal({
-          title: helpers.length.toString(),
-          content: 'curPrice: ' + curPrice + ' and cutPrice: ' + cutPrice
-        })
         for(var i = 0; i < helpers.length; i++){
           if(currentNickName == helpers[i].nick) {
             if(currentNickName == sourceNickName){
@@ -144,14 +140,11 @@ Page({
     wx.request({
       url: 'https://api.it120.cc/' + app.globalData.subDomain + '/shop/goods/kanjia/help',
       data: {
-        token: that.data.option.token,
+        token: wx.getStorageSync('token'),
         kjid: that.data.option.kjid,
-        joinerUser: wx.getStorageSync('uid')
+        joinerUser: that.data.option.userid
       },
       success: function(res) {
-        wx.showModal({
-          content: res.data.data.cutPrice.toString()
-        })
         that.getKanjiaInfo()
       },
     })
