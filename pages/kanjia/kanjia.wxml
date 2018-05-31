@@ -7,12 +7,12 @@
     <text style="font-size: 30rpx;color: #fff;margin-bottom: 20rpx;margin-top: 10rpx;">史上最好吃荔枝，快来帮我砍到最低价吧~</text>
 
     <view style="display: flex;flex-direction: horizontal;width: 650rpx;height: 200rpx;background-color: #fff;">
-      <image mode="aspectFill" src="{{itemInfo.pic}}" style="width: 180rpx;padding-top:10rpx;padding-left:10rpx;height: 180rpx;"></image>
+      <image mode="aspectFill" src="{{itemInfo.basicInfo.pic}}" style="width: 180rpx;padding-top:10rpx;padding-left:10rpx;height: 180rpx;"></image>
       <view style="display: flex;flex-direction: column;align-items: left;font-size: 30rpx;">
-        <view style="flex-grow: 1;margin-top: 20rpx;margin-left: 20rpx;">{{itemInfo.name}}</view>
+        <view style="flex-grow: 1;margin-top: 20rpx;margin-left: 20rpx;">{{itemInfo.basicInfo.name}}</view>
         <view style="flex-grow: 1;margin-top: 20rpx;margin-left: 20rpx;">
-          <text style="margin-right: 60rpx;color: #e85654">底价￥{{itemInfo.minPrice}}</text>
-          <text style="color: gray;">原价￥{{itemInfo.originalPrice}}</text>
+          <text style="margin-right: 60rpx;color: #e85654">底价￥{{itemInfo.basicInfo.minPrice}}</text>
+          <text style="color: gray;">原价￥{{itemInfo.basicInfo.originalPrice}}</text>
         </view>
       </view>
     </view>

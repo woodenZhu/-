@@ -63,8 +63,9 @@ Page({
         id: that.data.option.goodsid,
       },
       success: function(res) {
+        console.log(res);
         that.setData({
-          itemInfo: res.data.data.basicInfo
+          itemInfo: res.data.data
         })
         that.getKanjiaInfo();
       }
@@ -107,10 +108,9 @@ Page({
         joiner: that.data.option.userid
       },
       success: function(res) {
-        console.log(res);
         var helpers = res.data.data.helps;
         var kjMesg = '', kjTap = '', invite = '', inviteTap = '';
-        var originalPrice = that.data.itemInfo.originalPrice;
+        var originalPrice = that.data.itemInfo.basicInfo.originalPrice;
         var curPrice = res.data.data.kanjiaInfo.curPrice;
         var cutPrice = that.subtr(originalPrice, curPrice);
         for(var i = 0; i < helpers.length; i++){
@@ -190,7 +190,16 @@ Page({
     })
   },
   goToPay: function() {
-    console.log("goToPay");
+    var buyNowInfo = this.buliduBuyNowInfo();
+    // 写入本地存储
+    wx.setStorage({
+      key:"buyNowInfo",
+      data:buyNowInfo
+    })
+
+    wx.navigateTo({
+      url: "/pages/to-pay-order/to-pay-order?orderType=buyNow&kjid=" + this.data.option.kjid
+    })    
   },
   inviteKanjia: function() {
 
@@ -212,5 +221,37 @@ Page({
     this.setData({
       kjEnd: true
     })
-  }
+  },
+  buliduBuyNowInfo: function () {
+    
+    var properties = this.data.itemInfo.properties;
+    var childsCurGoods = properties[0].childsCurGoods;
+    var propertyChildIds = properties[properties.length - 1].id + ':' + childsCurGoods[childsCurGoods.length - 1].id;
+    var propertyChildNames = properties[properties.length - 1].name + ':' + childsCurGoods[childsCurGoods.length - 1].name;
+    var shopCarMap = {};
+    shopCarMap.goodsId = this.data.itemInfo.basicInfo.id;
+    shopCarMap.pic = this.data.itemInfo.basicInfo.pic;
+    shopCarMap.name = this.data.itemInfo.basicInfo.name;
+    shopCarMap.propertyChildIds = propertyChildIds;
+    shopCarMap.label = propertyChildNames;
+    shopCarMap.price = this.data.currentPrice;
+    shopCarMap.score = 0;
+    shopCarMap.left = "";
+    shopCarMap.active = true;
+    shopCarMap.number = 1;
+    shopCarMap.logisticsType = this.data.itemInfo.basicInfo.logisticsId;
+    shopCarMap.logistics = this.data.itemInfo.logistics;
+    shopCarMap.weight = this.data.itemInfo.basicInfo.weight;
+
+    var buyNowInfo = {};
+    if (!buyNowInfo.shopNum) {
+      buyNowInfo.shopNum = 0;
+    }
+    if (!buyNowInfo.shopList) {
+      buyNowInfo.shopList = [];
+    }
+    buyNowInfo.shopList.push(shopCarMap);
+    buyNowInfo.kjId = this.data.option.kjId;
+    return buyNowInfo;
+  },   
 })

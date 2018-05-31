@@ -51,7 +51,7 @@
   <view wx:for="{{kanJiaList}}" wx:key="goodsId" style="display:flex;width: 750rpx; height: 250rpx;background: #fff;border-bottom: thick #f2f2f2 solid;">
       <image mode="aspectFill" style="height: 200rpx; width: 200rpx;padding-top: 25rpx;padding-left: 20rpx;" src="{{item.pic}}"></image>
       <view style="display: flex;flex-direction: column;">
-          <view style="padding-top: 10%; padding-left: 20rpx;">{{item.name}}(5斤装)</view>
+          <view style="padding-top: 10%; padding-left: 20rpx;">{{item.name}}(20斤装)</view>
           <view style="display: flex;justify-content: space-between">
             <view style="padding: 25rpx 100rpx 0 20rpx;flex-grow: 0;">
               <view style="color: red;font-size: 40rpx;">￥{{item.minPrice}}</view>
