@@ -197,7 +197,7 @@ Page({
   },
   goToKanjia: function() {
     wx.reLaunch({
-      url: "/pages/shop-cart/shop-cart"
+      url: "/pages/finder/finder"
     });
   },
   subtr: function(arg1, arg2) {
