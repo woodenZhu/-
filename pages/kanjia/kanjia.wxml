@@ -26,7 +26,8 @@
       <view style="background: #e64340;width: 200rpx;height: 70rpx;line-height: 70rpx;text-align: center;border-radius: 10rpx;" bindtap="{{inviteTap}}">{{invite}}</view>
     </view>
 
-    <wxc-countdown style="margin-top: 20rpx;" countdown="3" format="dd:hh:mm:ss" bind:endcount="endcount"></wxc-countdown>
+    <wxc-countdown wx:if="{{!kjEnd}}" style="margin-top: 20rpx;" countdown="{{countdown}}" format="dd:hh:mm:ss" bind:endcount="endcount"></wxc-countdown>
+    <view wx:if="{{kjEnd}}">砍价已结束</view>
   </view>
 
 </view>

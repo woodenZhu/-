@@ -59,7 +59,6 @@ Page({
         id: e.id
       },
       success: function(res) {
-        console.log(res);
         var selectSizeTemp = "";
         if (res.data.data.properties) {
           for(var i=0;i<res.data.data.properties.length;i++){
@@ -201,7 +200,6 @@ Page({
           propertyChildIds:propertyChildIds
         },
         success: function(res) {
-          console.log(res)
           that.setData({
             selectSizePrice:res.data.data.originalPrice,
             totalScoreToPay: res.data.data.score,

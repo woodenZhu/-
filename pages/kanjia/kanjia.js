@@ -7,12 +7,17 @@ Page({
     sourceId: '',
     currentPrice: 0,
     cutPrice: 0,
-    itemInfo: {}
+    itemInfo: {},
+    kjEnd: false
   },
 
   onLoad: function(option) {
+    var timestampNow = Date.parse(new Date());
+    var timestampEnd = Date.parse(new Date(option.dateend));
+    var countdown = timestampEnd / 1000 - timestampNow / 1000;
     this.setData({
       option: option,
+      countdown: countdown,
       userInfo: JSON.parse(option.userInfo)
     })
     if(!wx.getStorageSync('token')) {
@@ -102,6 +107,7 @@ Page({
         joiner: that.data.option.userid
       },
       success: function(res) {
+        console.log(res);
         var helpers = res.data.data.helps;
         var kjMesg = '', kjTap = '', invite = '', inviteTap = '';
         var originalPrice = that.data.itemInfo.originalPrice;
@@ -190,7 +196,9 @@ Page({
 
   },
   goToKanjia: function() {
-
+    wx.reLaunch({
+      url: "/pages/shop-cart/shop-cart"
+    });
   },
   subtr: function(arg1, arg2) {
     var r1,r2,m,n; 
@@ -201,6 +209,8 @@ Page({
     return ((arg1*m-arg2*m)/m).toFixed(n); 
   },
   endcount: function() {
-    console.log("endcount");
+    this.setData({
+      kjEnd: true
+    })
   }
 })

@@ -165,6 +165,11 @@ Page({
     })
   },
   initShippingAddress: function () {
+    if(!wx.getStorageSync('token')) {
+      wx.navigateTo({
+        url: "/pages/authorize/authorize"
+      })
+    }
     var that = this;
     var token = wx.getStorageSync('token');
     wx.request({
