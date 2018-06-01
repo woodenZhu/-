@@ -63,7 +63,6 @@ Page({
         id: that.data.option.goodsid,
       },
       success: function(res) {
-        console.log(res);
         that.setData({
           itemInfo: res.data.data
         })
@@ -108,11 +107,19 @@ Page({
         joiner: that.data.option.userid
       },
       success: function(res) {
+        console.log(res)
         var helpers = res.data.data.helps;
         var kjMesg = '', kjTap = '', invite = '', inviteTap = '';
-        var originalPrice = that.data.itemInfo.basicInfo.originalPrice;
         var curPrice = res.data.data.kanjiaInfo.curPrice;
-        var cutPrice = that.subtr(originalPrice, curPrice);
+        var cutPrice = 0;
+        if(helpers.length == 1) {
+          cutPrice = helpers[0].cutPrice;
+        }else {
+          cutPrice = helpers.reduce((prev, cur, index, array) => {
+            return that.addtr(prev.cutPrice, cur.cutPrice);
+          },0);
+        }
+        var originalPrice = that.addtr(curPrice,cutPrice);
         for(var i = 0; i < helpers.length; i++){
           if(currentNickName == helpers[i].nick) {
             if(currentNickName == sourceNickName){
@@ -146,8 +153,10 @@ Page({
           invite: invite,
           kjMesg: kjMesg,
           kjTap: kjTap,
-          currentPrice: res.data.data.kanjiaInfo.curPrice,
-          cutPrice: cutPrice
+          minPrice: res.data.data.kanjiaInfo.minPrice,
+          currentPrice: curPrice,
+          cutPrice: cutPrice,
+          originalPrice: originalPrice
         })
       }
     })
@@ -202,20 +211,20 @@ Page({
     })    
   },
   inviteKanjia: function() {
-
+    this.onShareAppMessage();
   },
   goToKanjia: function() {
     wx.reLaunch({
       url: "/pages/finder/finder"
     });
   },
-  subtr: function(arg1, arg2) {
+  addtr: function(arg1, arg2) {
     var r1,r2,m,n; 
     try{r1=arg1.toString().split(".")[1].length}catch(e){r1=0} 
     try{r2=arg2.toString().split(".")[1].length}catch(e){r2=0} 
     m=Math.pow(10,Math.max(r1,r2)); 
     n=(r1>=r2)?r1:r2; 
-    return ((arg1*m-arg2*m)/m).toFixed(n); 
+    return ((arg1*m+arg2*m)/m).toFixed(n); 
   },
   endcount: function() {
     this.setData({

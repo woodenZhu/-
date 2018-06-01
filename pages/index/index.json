@@ -1,3 +1,7 @@
 {
-    "navigationBarTitleText": "荔鲜森"
+    "navigationBarTitleText": "荔鲜森",
+    "usingComponents": {
+    "wxc-popup": "../../dist/packages/@minui/wxc-popup/dist/index",
+    "wxc-icon": "../../dist/packages/@minui/wxc-icon/dist/index"
+  }
 }

@@ -243,7 +243,8 @@ Page({
   goKanJia: function(e) {
     var kjid = e.currentTarget.dataset.kjid;
     var goodsid = e.currentTarget.dataset.goodsid;
-    var dateEnd = e.currentTarget.dataset.dateend;
+    var dateEnd = Date.parse(new Date(e.currentTarget.dataset.dateend));
+    
     if(!wx.getStorageSync('token')) {
       wx.navigateTo({
         url: "/pages/authorize/authorize"
@@ -252,9 +253,9 @@ Page({
       var token = wx.getStorageSync('token');
       var userInfo = JSON.stringify(wx.getStorageSync('userInfo'));
       var userid = wx.getStorageSync('uid');
-      var dateEnd = 
       wx.navigateTo({
-        url: '/pages/kanjia/kanjia?kjid='+kjid+'&token='+token+'&userInfo='+userInfo+'&goodsid='+goodsid+'&userid='+userid+'&dateend='+dateEnd
+        url: '/pages/kanjia/kanjia?kjid='+kjid+'&goodsid='
+          +goodsid+'&userid='+userid+'&dateend='+dateEnd/1000
       })
     }
   }

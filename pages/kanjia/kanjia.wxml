@@ -11,8 +11,8 @@
       <view style="display: flex;flex-direction: column;align-items: left;font-size: 30rpx;">
         <view style="flex-grow: 1;margin-top: 20rpx;margin-left: 20rpx;">{{itemInfo.basicInfo.name}}</view>
         <view style="flex-grow: 1;margin-top: 20rpx;margin-left: 20rpx;">
-          <text style="margin-right: 60rpx;color: #e85654">底价￥{{itemInfo.basicInfo.minPrice}}</text>
-          <text style="color: gray;">原价￥{{itemInfo.basicInfo.originalPrice}}</text>
+          <text style="margin-right: 60rpx;color: #e85654">底价￥{{option.minprice}}</text>
+          <text style="color: gray;">原价￥{{option.originalprice}}</text>
         </view>
       </view>
     </view>

@@ -17,6 +17,7 @@ Page({
     goods:[],
     scrollTop:"0",
     loadingMoreHidden:true,
+    popupStatus: 'hide',
 
     hasNoCoupons:true,
     coupons: [],
@@ -41,7 +42,8 @@ Page({
         selectCurrent: e.index  
     })  
   },
-  onLoad: function () {
+  onLoad: function (option) {
+    console.log(decodeURIComponent(option.scene))
     var that = this
     
     // wx.setNavigationBarTitle({
@@ -127,6 +129,7 @@ Page({
     }
   },
   createShare: function() {
+    var that = this;
     wx.request({
       url: 'https://api.it120.cc/guoyz/qrcode/wxa/unlimit',
       data: {
@@ -134,11 +137,18 @@ Page({
         path: '/pages/finder/finder'
       },
       success: function(res) {
-        console.log(res);
+        that.setData({
+          shareSrc: res.data.data
+        })
       },
       fail: function(res) {
         console.log(res);
       }
+    })
+  },
+  createPopup: function() {
+    this.setData({
+      popupStatus: 'show'
     })
   }
 })

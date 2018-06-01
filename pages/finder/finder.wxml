@@ -62,7 +62,7 @@
               <view style="font-size: 25rpx;padding-left: 10rpx;">原价</view>
             </view>
             <view style="margin-top: 15%;margin-left: 18%;flex-grow: 1; flex-basis:100%;">
-              <view data-kjid="{{item.id}}" data-goodsid="{{item.goodsId}}" data-dateend="{{item.dateEnd}}" class="kaikan" bindtap="goKanJia">开砍</view>
+              <view data-kjid="{{item.id}}" data-goodsid="{{item.goodsId}}" data-dateend="{{item.dateEnd}}" data-minprice="{{item.minPrice}}" data-originalprice="{{item.originalPrice}}" class="kaikan" bindtap="goKanJia">开砍</view>
             </view>
             
           </view>

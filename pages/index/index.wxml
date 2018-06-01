@@ -1,6 +1,6 @@
 <!--index.wxml-->
 <!--1px = 750/320 = 2.34rpx;-->
-<view class="container">
+<view class="container" style="display: none;">
 
   <view class="remind-box" wx:if="{{remind}}">
     <image class="remind-img" src="/images/more/loading.gif"></image>
@@ -32,4 +32,10 @@
   </block>
   
 </view>
-<!-- <button bindtap="createShare">生成小程序码</button> -->
+<button bindtap="createShare">小程序码</button>
+<button bindtap="createPopup">遮罩层</button>
+<wxc-popup animation-mode="none" align="center" status="{{popupStatus}}" locked="hide">
+  <view style="background: #e85654;width: 300rpx;height:400rpx;position: relative;padding:0;margin: 0;">
+    <wxc-icon type="close" color="#fff" style="position: absolute;top:0;right: 0;"></wxc-icon>
+  </view>
+</wxc-popup>
