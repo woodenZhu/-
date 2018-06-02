@@ -1,17 +1,19 @@
 page {
   height: 100%;
-  overflow: hidden;
+  overflow: scroll;
   background-color: #eee;
 }
-.container{
+.contain{
   min-height: 100%;
-  overflow: hidden;
-  overflow-y: hidden;
+  overflow: scroll;
+  overflow-y: scroll;
 }
 .userinfo {
   display: flex;
   flex-direction: column;
-  padding: 50rpx 0;
+  /*padding: 50rpx 0;*/
+  padding-top: 50rpx;
+  padding-bottom: 20rpx;
   align-items: center;
   /*background: #e85654;*/
   background: rgba(232,86,84,0.9);
@@ -31,4 +33,11 @@ page {
   /*margin-top: 15rpx;*/
   font-size: 30rpx;
   color: #fff;
+}
+
+.helperinfo-avatar {
+  width: 100rpx;
+  height: 100rpx;
+  /*margin: 20rpx;*/
+  border-radius: 50%;
 }

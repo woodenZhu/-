@@ -243,7 +243,8 @@ Page({
   goKanJia: function(e) {
     var kjid = e.currentTarget.dataset.kjid;
     var goodsid = e.currentTarget.dataset.goodsid;
-    var dateEnd = Date.parse(new Date(e.currentTarget.dataset.dateend));
+    var dateEnd = Date.parse(new Date(e.currentTarget.dataset.dateend)) / 1000;
+    var userid = wx.getStorageSync('uid');
     
     if(!wx.getStorageSync('token')) {
       wx.navigateTo({
@@ -251,12 +252,36 @@ Page({
       })
     }else {
       var token = wx.getStorageSync('token');
-      var userInfo = JSON.stringify(wx.getStorageSync('userInfo'));
-      var userid = wx.getStorageSync('uid');
-      wx.navigateTo({
-        url: '/pages/kanjia/kanjia?kjid='+kjid+'&goodsid='
-          +goodsid+'&userid='+userid+'&dateend='+dateEnd/1000
+      wx.request({
+        url: 'https://api.it120.cc/' + app.globalData.subDomain + '/shop/goods/kanjia/my',
+        data: {
+          kjid: kjid,
+          token: token
+        },
+        success: function(res) {
+          if(res.data.code == 700) {
+            wx.request({
+              url: 'https://api.it120.cc/' + app.globalData.subDomain + '/shop/goods/kanjia/join',
+              data: {
+                kjid: kjid,
+                token: token
+              },
+              success: function(res) {
+                wx.navigateTo({
+                  url: '/pages/kanjia/kanjia?kjid='+kjid+'&goodsid='
+                    +goodsid+'&userid='+userid+'&dateend='+dateEnd
+                })
+              }
+            })
+          }else {
+            wx.navigateTo({
+              url: '/pages/kanjia/kanjia?kjid='+kjid+'&goodsid='
+                +goodsid+'&userid='+userid+'&dateend='+dateEnd
+            })
+          }
+        }
       })
+      
     }
   }
 })

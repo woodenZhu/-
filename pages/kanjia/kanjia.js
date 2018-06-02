@@ -8,17 +8,30 @@ Page({
     currentPrice: 0,
     cutPrice: 0,
     itemInfo: {},
-    kjEnd: false
+    kjEnd: false,
+    popupStatus: 'hide'
   },
 
   onLoad: function(option) {
+    var optionObj = {};
+    if(option.scene) {
+      var sceneStr = decodeURIComponent(option.scene);
+      var scenes = sceneStr.split('&');
+      optionObj = {
+        kjid: scenes[0],
+        goodsid: scenes[1],
+        userid: scenes[2],
+        dateend: scenes[3]
+      };
+    }else {
+      optionObj = option;
+    }
     var timestampNow = Date.parse(new Date());
-    var timestampEnd = Date.parse(new Date(option.dateend));
-    var countdown = timestampEnd / 1000 - timestampNow / 1000;
+    var countdown = parseInt(optionObj.dateend) - timestampNow / 1000;
     this.setData({
-      option: option,
-      countdown: countdown,
-      userInfo: JSON.parse(option.userInfo)
+      option: optionObj,
+      countdown: countdown > 0 ? countdown : 0,
+      kjEnd: countdown == 0 ? true : false
     })
     if(!wx.getStorageSync('token')) {
       wx.navigateTo({
@@ -30,12 +43,7 @@ Page({
       // this.kanjia();
   },
   onShow: function() {
-    if(wx.getStorageSync('token') === this.data.option.token) {
-      this.joinKanjia();
-    }else {
-      this.getItemInfo();
-    }
-    
+    this.getItemInfo();
   },
   goToIndex: function() {
     wx.reLaunch({
@@ -46,7 +54,7 @@ Page({
     var that = this;
     return {
       title: '我发现一件好物，来帮我砍价吧~',
-      path: '/pages/kanjia/kanjia?kjid='+that.data.option.kjid+'&token='+that.data.option.token+'&userInfo='+that.data.option.userInfo+'&goodsid='+that.data.option.goodsid+'&userid='+that.data.option.userid,
+      path: '/pages/kanjia/kanjia?kjid='+that.data.option.kjid+'&goodsid='+that.data.option.goodsid+'&userid='+that.data.option.userid+'&dateend='+that.data.option.dateend,
       success: function (res) {
         // 转发成功
       },
@@ -70,36 +78,8 @@ Page({
       }
     })
   },
-  joinKanjia: function() {
-    var that = this;
-    wx.request({
-      url: 'https://api.it120.cc/' + app.globalData.subDomain + '/shop/goods/kanjia/my',
-      data: {
-        kjid: that.data.option.kjid,
-        token: wx.getStorageSync('token')
-      },
-      success: function(res) {
-        if(res.data.code == 700) {
-          wx.request({
-            url: 'https://api.it120.cc/' + app.globalData.subDomain + '/shop/goods/kanjia/join',
-            data: {
-              kjid: that.data.option.kjid,
-              token: wx.getStorageSync('token')
-            },
-            success: function(res) {
-              that.getItemInfo();
-            }
-          })
-        }else {
-          that.getItemInfo();
-        }
-      }
-    })
-  },
   getKanjiaInfo: function() {
     var that = this;
-    var sourceNickName = JSON.parse(that.data.option.userInfo).nickName;
-    var currentNickName = wx.getStorageSync('userInfo').nickName;
     wx.request({
       url: 'https://api.it120.cc/' + app.globalData.subDomain + '/shop/goods/kanjia/info',
       data: {
@@ -108,6 +88,9 @@ Page({
       },
       success: function(res) {
         console.log(res)
+        var currentNickName = wx.getStorageSync('userInfo').nickName;
+        var sourceNickName = res.data.data.joiner.nick;
+        var sourcePic = res.data.data.joiner.avatarUrl;
         var helpers = res.data.data.helps;
         var kjMesg = '', kjTap = '', invite = '', inviteTap = '';
         var curPrice = res.data.data.kanjiaInfo.curPrice;
@@ -115,9 +98,9 @@ Page({
         if(helpers.length == 1) {
           cutPrice = helpers[0].cutPrice;
         }else {
-          cutPrice = helpers.reduce((prev, cur, index, array) => {
-            return that.addtr(prev.cutPrice, cur.cutPrice);
-          },0);
+          for(var i = 0; i < helpers.length; i++) {
+            cutPrice = that.addtr(cutPrice, helpers[i].cutPrice);
+          }
         }
         var originalPrice = that.addtr(curPrice,cutPrice);
         for(var i = 0; i < helpers.length; i++){
@@ -151,11 +134,15 @@ Page({
         }
         that.setData({
           invite: invite,
+          inviteTap: inviteTap,
           kjMesg: kjMesg,
           kjTap: kjTap,
+          sourceNickName: sourceNickName,
+          sourcePic: sourcePic,
           minPrice: res.data.data.kanjiaInfo.minPrice,
           currentPrice: curPrice,
           cutPrice: cutPrice,
+          helpers: helpers,
           originalPrice: originalPrice
         })
       }
@@ -164,9 +151,6 @@ Page({
   },
   kanjia: function() {
     var that = this;
-    var token = that.data.option.token;
-    var kjid = that.data.kjid;
-    var joinerUser = that.data.currentId;
     wx.request({
       url: 'https://api.it120.cc/' + app.globalData.subDomain + '/shop/goods/kanjia/help',
       data: {
@@ -211,7 +195,9 @@ Page({
     })    
   },
   inviteKanjia: function() {
-    this.onShareAppMessage();
+    this.setData({
+      popupStatus: 'show'
+    })
   },
   goToKanjia: function() {
     wx.reLaunch({
