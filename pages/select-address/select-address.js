@@ -24,13 +24,13 @@ Page({
 
   addAddess : function () {
     wx.navigateTo({
-      url:"/pages/address-add/index"
+      url:"/pages/address-add/address-add"
     })
   },
   
   editAddess: function (e) {
     wx.navigateTo({
-      url: "/pages/address-add/index?id=" + e.currentTarget.dataset.id
+      url: "/pages/address-add/address-add?id=" + e.currentTarget.dataset.id
     })
   },
   

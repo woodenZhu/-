@@ -9,38 +9,51 @@ Page({
     cutPrice: 0,
     itemInfo: {},
     kjEnd: false,
-    popupStatus: 'hide'
+    popupStatus: 'hide',
+    popupStatusImg: 'hide',
+    showToast: false
   },
 
   onLoad: function(option) {
+    var that = this;
     var optionObj = {};
     if(option.scene) {
       var sceneStr = decodeURIComponent(option.scene);
-      var scenes = sceneStr.split('&');
+      var scenes = sceneStr.split(',');
       optionObj = {
         kjid: scenes[0],
         goodsid: scenes[1],
-        userid: scenes[2],
-        dateend: scenes[3]
+        userid: scenes[2]
       };
     }else {
       optionObj = option;
     }
-    var timestampNow = Date.parse(new Date());
-    var countdown = parseInt(optionObj.dateend) - timestampNow / 1000;
-    this.setData({
-      option: optionObj,
-      countdown: countdown > 0 ? countdown : 0,
-      kjEnd: countdown == 0 ? true : false
+    that.setData({
+      option: optionObj
+    })
+    wx.request({
+      url: 'https://api.it120.cc/'+ app.globalData.subDomain +'/shop/goods/kanjia/list',
+      success: function(res) {
+        var allItems = res.data.data.result;
+        for(var i = 0; i < allItems.length; i++) {
+          if(allItems[i].id == that.data.option.kjid) {
+            var timestampNow = Date.parse(new Date());
+            var timestampEnd = Date.parse(new Date(allItems[i].dateEnd));
+            var countdown = timestampEnd / 1000 - timestampNow / 1000;
+            that.setData({
+              countdown: countdown > 0 ? countdown : 0,
+              kjEnd: countdown == 0 ? true : false
+            })
+            break;
+          }
+        }
+      }
     })
     if(!wx.getStorageSync('token')) {
       wx.navigateTo({
         url: "/pages/authorize/authorize"
       })
     }
-      // this.getKanjiaInfo();
-      // this.joinKanjia();
-      // this.kanjia();
   },
   onShow: function() {
     this.getItemInfo();
@@ -52,9 +65,14 @@ Page({
   },
   onShareAppMessage: function () {
     var that = this;
+    if(that.data.popupStatus == 'show') {
+      that.setData({
+        popupStatus: 'hide'
+      })
+    }
     return {
       title: '我发现一件好物，来帮我砍价吧~',
-      path: '/pages/kanjia/kanjia?kjid='+that.data.option.kjid+'&goodsid='+that.data.option.goodsid+'&userid='+that.data.option.userid+'&dateend='+that.data.option.dateend,
+      path: '/pages/kanjia/kanjia?kjid='+that.data.option.kjid+'&goodsid='+that.data.option.goodsid+'&userid='+that.data.option.userid,
       success: function (res) {
         // 转发成功
       },
@@ -77,6 +95,7 @@ Page({
         that.getKanjiaInfo();
       }
     })
+
   },
   getKanjiaInfo: function() {
     var that = this;
@@ -87,7 +106,6 @@ Page({
         joiner: that.data.option.userid
       },
       success: function(res) {
-        console.log(res)
         var currentNickName = wx.getStorageSync('userInfo').nickName;
         var sourceNickName = res.data.data.joiner.nick;
         var sourcePic = res.data.data.joiner.avatarUrl;
@@ -249,4 +267,52 @@ Page({
     buyNowInfo.kjId = this.data.option.kjId;
     return buyNowInfo;
   },   
+  closePopup: function() {
+    this.setData({
+      popupStatus: 'hide'
+    })
+  },
+  createErweima: function() {
+    var that = this;
+    var kjid = that.data.option.kjid;
+    var goodsid = that.data.option.goodsid;
+    var userid = that.data.option.userid;
+    var scene = kjid + ',' + goodsid + ',' + userid;
+    wx.request({
+      url: 'https://api.it120.cc/guoyz/qrcode/wxa/unlimit',
+      data: {
+        scene: scene,
+        path: '/pages/finder/finder'
+      },
+      success: function(res) {
+        that.setData({
+          popupStatus: 'hide',
+          popupStatusImg: 'show',
+          srcErweima: res.data.data
+        })
+      },
+      fail: function(res) {
+        console.log(res);
+      }
+    })
+  },
+  saveImage: function() {
+    var that = this;
+    wx.getImageInfo({
+      src: that.data.srcErweima,
+      success: function(res) {
+        wx.saveImageToPhotosAlbum({
+          filePath: res.path,
+          success: function(res) {
+            that.setData({
+              popupStatusImg: 'hide',
+            })
+          }
+        })
+      },
+      fail: function(err) {
+        console.log(err)
+      }
+    })
+  }
 })

@@ -196,6 +196,7 @@ Page({
   processYunfei: function () {
     var that = this;
     var goodsList = this.data.goodsList;
+    console.log(goodsList);
     var goodsJsonStr = "[";
     var isNeedLogistics = 0;
     var allGoodsPrice = 0;

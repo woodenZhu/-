@@ -27,7 +27,6 @@ Page({
 
   //事件处理函数
   swiperchange: function(e) {
-    // console.log(query.select('swiper'));
        this.setData({  
         swiperCurrent: e.detail.current  
     })  
@@ -43,7 +42,6 @@ Page({
     })  
   },
   onLoad: function (option) {
-    console.log(decodeURIComponent(option.scene))
     var that = this
     
     // wx.setNavigationBarTitle({
@@ -127,28 +125,5 @@ Page({
         // 转发失败
       }
     }
-  },
-  createShare: function() {
-    var that = this;
-    wx.request({
-      url: 'https://api.it120.cc/guoyz/qrcode/wxa/unlimit',
-      data: {
-        scene:'zhuanfa',
-        path: '/pages/finder/finder'
-      },
-      success: function(res) {
-        that.setData({
-          shareSrc: res.data.data
-        })
-      },
-      fail: function(res) {
-        console.log(res);
-      }
-    })
-  },
-  createPopup: function() {
-    this.setData({
-      popupStatus: 'show'
-    })
   }
 })

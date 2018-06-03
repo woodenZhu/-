@@ -15,7 +15,7 @@ page{
     height: 88rpx;
     line-height: 88rpx;
     margin-left: 30rpx;
-    border-bottom: 1rpx solid #eee;
+    border-bottom: 1rpx solid #f4f4f4;
     display: flex;
     font-size: 28rpx;
     /*justify-content: space-between;*/
@@ -63,7 +63,7 @@ button[type="default"]{
     height: auto;
     padding: 30rpx 0;
     margin-left:30rpx;
-    border-bottom: 1rpx solid #eee;
+    border-bottom: 1rpx solid #f4f4f4;
     display: flex;
     font-size: 28rpx;
 }

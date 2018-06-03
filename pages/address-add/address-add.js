@@ -3,78 +3,82 @@ var commonCityData = require('../../utils/city.js')
 var app = getApp()
 Page({
   data: {
-    provinces:[],
-    citys:[],
-    districts:[],
-    selProvince:'请选择',
-    selCity:'请选择',
-    selDistrict:'请选择',
-    selProvinceIndex:0,
-    selCityIndex:0,
-    selDistrictIndex:0
+    provinces: [],
+    citys: [],
+    defaultProvinceCode: 2,
+    defaultCityCode: 3,
+    defaultCountyCode: 16,
+    defaultAddressCode: '057750',
+    districts: [],
+    selProvince: '请选择',
+    selCity: '请选择',
+    selDistrict: '请选择',
+    selProvinceIndex: 0,
+    selCityIndex: 0,
+    selDistrictIndex: 0
   },
-  bindCancel:function () {
+  bindCancel: function () {
     wx.navigateBack({})
   },
-  bindSave: function(e) {
+  bindSave: function (e) {
     var that = this;
     var linkMan = e.detail.value.linkMan;
     var address = e.detail.value.address;
     var mobile = e.detail.value.mobile;
     var code = e.detail.value.code;
-    var token = wx.getStorageSync('token');
-    if (linkMan == ""){
+
+    if (linkMan == "") {
       wx.showModal({
         title: '提示',
         content: '请填写联系人姓名',
-        showCancel:false
+        showCancel: false
       })
       return
     }
-    if (mobile == ""){
+    if (mobile == "") {
       wx.showModal({
         title: '提示',
         content: '请填写手机号码',
-        showCancel:false
+        showCancel: false
       })
       return
     }
-    if (this.data.selProvince == "请选择"){
+    if (this.data.selProvince == "请选择") {
       wx.showModal({
         title: '提示',
         content: '请选择地区',
-        showCancel:false
+        showCancel: false
       })
       return
     }
-    if (this.data.selCity == "请选择"){
+    if (this.data.selCity == "请选择") {
       wx.showModal({
         title: '提示',
         content: '请选择地区',
-        showCancel:false
+        showCancel: false
       })
       return
     }
     var cityId = commonCityData.cityData[this.data.selProvinceIndex].cityList[this.data.selCityIndex].id;
     var districtId;
-    if (this.data.selDistrict == "请选择" || !this.data.selDistrict){
+    if (this.data.selDistrict == "请选择" || !this.data.selDistrict) {
       districtId = '';
     } else {
       districtId = commonCityData.cityData[this.data.selProvinceIndex].cityList[this.data.selCityIndex].districtList[this.data.selDistrictIndex].id;
     }
-    if (address == ""){
+    if (address == "") {
       wx.showModal({
         title: '提示',
         content: '请填写详细地址',
-        showCancel:false
+        showCancel: false
       })
       return
     }
-    if (code == ""){
+    if (code == "") {
       wx.showModal({
         title: '提示',
         content: '请填写邮编',
-        showCancel:false
+        showCancel: false
       })
       return
     }
@@ -88,30 +92,25 @@ Page({
     wx.request({
       url: 'https://api.it120.cc/' + app.globalData.subDomain + '/user/shipping-address/' + apiAddoRuPDATE,
       data: {
-        token: token,
+        token: wx.getStorageSync('token'),
         id: apiAddid,
         provinceId: commonCityData.cityData[this.data.selProvinceIndex].id,
         cityId: cityId,
         districtId: districtId,
-        linkMan:linkMan,
-        address:address,
-        mobile:mobile,
-        code:code,
-        isDefault:'true'
+        linkMan: linkMan,
+        address: address,
+        mobile: mobile,
+        code: code,
+        isDefault: 'true'
       },
-      success: function(res) {
+      success: function (res) {
         if (res.data.code != 0) {
           // 登录错误 
           wx.hideLoading();
           wx.showModal({
             title: '失败',
             content: res.data.msg,
-            showCancel:false,
-            success: () => {
-              wx.navigateTo({
-                url: "/pages/authorize/index"
-              })
-            }
+            showCancel: false
           })
           return;
         }
@@ -120,59 +119,59 @@ Page({
       }
     })
   },
-  initCityData:function(level, obj){
-    if(level == 1){
+  initCityData: function (level, obj) {
+    if (level == 1) {
       var pinkArray = [];
-      for(var i = 0;i<commonCityData.cityData.length;i++){
+      for (var i = 0; i < commonCityData.cityData.length; i++) {
         pinkArray.push(commonCityData.cityData[i].name);
       }
       this.setData({
-        provinces:pinkArray
+        provinces: pinkArray
       });
-    } else if (level == 2){
+    } else if (level == 2) {
       var pinkArray = [];
       var dataArray = obj.cityList
-      for(var i = 0;i<dataArray.length;i++){
+      for (var i = 0; i < dataArray.length; i++) {
         pinkArray.push(dataArray[i].name);
       }
       this.setData({
-        citys:pinkArray
+        citys: pinkArray
       });
-    } else if (level == 3){
+    } else if (level == 3) {
       var pinkArray = [];
       var dataArray = obj.districtList
-      for(var i = 0;i<dataArray.length;i++){
+      for (var i = 0; i < dataArray.length; i++) {
         pinkArray.push(dataArray[i].name);
       }
       this.setData({
-        districts:pinkArray
+        districts: pinkArray
       });
     }
-    
+
   },
-  bindPickerProvinceChange:function(event){
+  bindPickerProvinceChange: function (event) {
     var selIterm = commonCityData.cityData[event.detail.value];
     this.setData({
-      selProvince:selIterm.name,
-      selProvinceIndex:event.detail.value,
-      selCity:'请选择',
-      selCityIndex:0,
-      selDistrict:'请选择',
+      selProvince: selIterm.name,
+      selProvinceIndex: event.detail.value,
+      selCity: '请选择',
+      selCityIndex: 0,
+      selDistrict: '请选择',
       selDistrictIndex: 0
     })
     this.initCityData(2, selIterm)
   },
-  bindPickerCityChange:function (event) {
+  bindPickerCityChange: function (event) {
     var selIterm = commonCityData.cityData[this.data.selProvinceIndex].cityList[event.detail.value];
     this.setData({
-      selCity:selIterm.name,
-      selCityIndex:event.detail.value,
+      selCity: selIterm.name,
+      selCityIndex: event.detail.value,
       selDistrict: '请选择',
       selDistrictIndex: 0
     })
     this.initCityData(3, selIterm)
   },
-  bindPickerChange:function (event) {
+  bindPickerChange: function (event) {
     var selIterm = commonCityData.cityData[this.data.selProvinceIndex].cityList[this.data.selCityIndex].districtList[event.detail.value];
     if (selIterm && selIterm.name && event.detail.value) {
       this.setData({
@@ -182,9 +181,9 @@ Page({
     }
   },
   onLoad: function (e) {
+    console.log(e)
     var that = this;
     this.initCityData(1);
-    var token = wx.getStorageSync('token');
     var id = e.id;
     if (id) {
       // 初始化原数据
@@ -192,19 +191,19 @@ Page({
       wx.request({
         url: 'https://api.it120.cc/' + app.globalData.subDomain + '/user/shipping-address/detail',
         data: {
-          token: token,
+          token: wx.getStorageSync('token'),
           id: id
         },
         success: function (res) {
           wx.hideLoading();
           if (res.data.code == 0) {
             that.setData({
-              id:id,
+              id: id,
               addressData: res.data.data,
               selProvince: res.data.data.provinceStr,
               selCity: res.data.data.cityStr,
               selDistrict: res.data.data.areaStr
-              });
+            });
             that.setDBSaveAddressId(res.data.data);
             return;
           } else {
@@ -218,7 +217,7 @@ Page({
       })
     }
   },
-  setDBSaveAddressId: function(data) {
+  setDBSaveAddressId: function (data) {
     var retSelIdx = 0;
     for (var i = 0; i < commonCityData.cityData.length; i++) {
       if (data.provinceId == commonCityData.cityData[i].id) {
@@ -235,14 +234,13 @@ Page({
         }
       }
     }
-   },
+  },
   selectCity: function () {
-    
+
   },
   deleteAddress: function (e) {
     var that = this;
     var id = e.currentTarget.dataset.id;
-    var token = wx.getStorageSync('token');
     wx.showModal({
       title: '提示',
       content: '确定要删除该收货地址吗？',
@@ -251,7 +249,7 @@ Page({
           wx.request({
             url: 'https://api.it120.cc/' + app.globalData.subDomain + '/user/shipping-address/delete',
             data: {
-              token: token,
+              token: wx.getStorageSync('token'),
               id: id
             },
             success: (res) => {
@@ -264,7 +262,7 @@ Page({
       }
     })
   },
-  readFromWx : function () {
+  readFromWx: function () {
     let that = this;
     wx.chooseAddress({
       success: function (res) {
@@ -272,10 +270,9 @@ Page({
         let cityName = res.cityName;
         let diatrictName = res.countyName;
         let retSelIdx = 0;
-
         for (var i = 0; i < commonCityData.cityData.length; i++) {
           if (provinceName == commonCityData.cityData[i].name) {
-            let eventJ = { detail: { value:i }};
+            let eventJ = { detail: { value: i } };
             that.bindPickerProvinceChange(eventJ);
             that.data.selProvinceIndex = i;
             for (var j = 0; j < commonCityData.cityData[i].cityList.length; j++) {
@@ -292,7 +289,6 @@ Page({
                 }
               }
             }
-            
           }
         }
 

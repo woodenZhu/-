@@ -243,7 +243,6 @@ Page({
   goKanJia: function(e) {
     var kjid = e.currentTarget.dataset.kjid;
     var goodsid = e.currentTarget.dataset.goodsid;
-    var dateEnd = Date.parse(new Date(e.currentTarget.dataset.dateend)) / 1000;
     var userid = wx.getStorageSync('uid');
     
     if(!wx.getStorageSync('token')) {
@@ -259,7 +258,7 @@ Page({
           token: token
         },
         success: function(res) {
-          if(res.data.code == 700) {
+          if(res.data.code != 0) {
             wx.request({
               url: 'https://api.it120.cc/' + app.globalData.subDomain + '/shop/goods/kanjia/join',
               data: {
@@ -267,16 +266,25 @@ Page({
                 token: token
               },
               success: function(res) {
-                wx.navigateTo({
-                  url: '/pages/kanjia/kanjia?kjid='+kjid+'&goodsid='
-                    +goodsid+'&userid='+userid+'&dateend='+dateEnd
-                })
+                if(res.data.code == 0) {
+                  wx.navigateTo({
+                    url: '/pages/kanjia/kanjia?kjid='+kjid+'&goodsid='
+                      +goodsid+'&userid='+userid
+                  })
+                }else {
+                  wx.showModal({
+                    title: '错误',
+                    content: '砍价尚未开始',
+                    showCancel: false
+                  })
+                }
+                
               }
             })
           }else {
             wx.navigateTo({
               url: '/pages/kanjia/kanjia?kjid='+kjid+'&goodsid='
-                +goodsid+'&userid='+userid+'&dateend='+dateEnd
+                +goodsid+'&userid='+userid
             })
           }
         }

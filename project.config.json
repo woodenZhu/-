@@ -30,20 +30,13 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 1,
+			"current": -1,
 			"list": [
 				{
-					"id": -1,
+					"id": 0,
 					"name": "获取二维码",
-					"pathName": "pages/index/index",
-					"query": "",
-					"scene": "1012"
-				},
-				{
-					"id": 1,
-					"name": "获取二维码",
-					"pathName": "pages/index/index",
-					"query": "scene=sdfsdlfjslkfjsf",
+					"pathName": "pages/kanjia/kanjia",
+					"query": "scene=255,48546,395490",
 					"scene": "1012"
 				}
 			]

@@ -54,9 +54,10 @@ page {
 }
 
 .button-item {
-  width: 50%;
-  font-size: 20rpx;
   background-color:#e85654;
+  height: 80rpx;
+  line-height: 80rpx;
+  width: 300rpx;
 }
 
 .border-bg {
