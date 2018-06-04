@@ -1,0 +1,78 @@
+
+.container {
+    /*background-color:#F2f2f2;*/
+    background-color:white;
+}
+.coupons-list{
+    width: 100%;
+    background-color: #fff;
+    margin-top: 20rpx;
+}
+.title-box{
+    width: 100%;
+    padding-top: 330rpx;
+    text-align: center;
+    font-size:28rpx;
+    color:#999;
+    /*background: url(https://cdn.it120.cc/images/weappshop/icon-cart.png) no-repeat center 205rpx;*/
+    background-size: 100rpx auto;
+    margin-bottom: 50rpx;
+}
+.to-index-btn{
+    color:#fff;
+    background:#e64340;
+    border-radius:6px;
+    width:300rpx;
+    height:70rpx;
+    line-height: 70rpx;
+    text-align: center;
+    font-size:28rpx;
+}
+.bottom-box{
+    position:fixed;
+    width: 100%;
+    bottom: 0;
+    font-size:28rpx;
+    color:#000000;
+    border-top: 1rpx solid #eee;
+    height:100rpx;
+    line-height: 100rpx;
+    background: #fff url(https://cdn.it120.cc/images/weappshop/arrow-right.png) no-repeat 705rpx center;
+}
+.bottom-box .add-btn{
+    margin-left: 30rpx;
+    padding-left: 70rpx;
+    background: url(https://cdn.it120.cc/images/weappshop/add-addr.png) no-repeat left center;
+    background-size: 40rpx auto;
+}
+.coupons-item{
+  width: 580rpx;
+  height: 180rpx;
+  margin: 10rpx 35rpx;
+  padding: 50rpx;
+  background: url(https://cdn.it120.cc/apifactory/2017/11/27/fadbf4818acc33c0e08a052d3ab3e648.png) 0 0 no-repeat;
+  background-size: 630rpx 250rpx;
+  background-position-x: 30rpx;
+  background-position-y: 15rpx;
+  background-color: #f1a83b;
+  font-size: 30rpx;
+  line-height: 50rpx;
+  display: inline-flex;
+  flex-direction: row;
+  border-radius: 10rpx;
+}
+
+.coupons-money {
+  width: 70rpx;
+  padding-top: 10rpx;
+  font-size: 56rpx;
+  font-weight: bold;
+  color: yellow;
+}
+
+.coupons-info {
+  width: 600rpx;
+  padding-left: 80rpx;
+  padding-top: 15rpx;
+  text-align: center;
+}

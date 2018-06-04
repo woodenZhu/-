@@ -16,6 +16,7 @@
     "pages/recharge/recharge",
     "pages/withdraw/withdraw",
     "pages/kanjia/kanjia",
+    "pages/mykanjia/mykanjia",
     "pages/authorize/authorize"
   ],
   "window":{
