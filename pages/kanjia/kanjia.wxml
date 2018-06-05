@@ -1,83 +1,82 @@
 <view class="contain">
-  <image bindtap="goToIndex" style="position: absolute;top: 10rpx; left: 10rpx;width: 50rpx;height: 50rpx;" src="../../images/more/index.png"></image>
+  <image bindtap="goToIndex" class="imageToIndex" src="../../images/more/index.png"></image>
   <view class="userinfo">
     <image class="userinfo-avatar" src="{{ sourcePic }}" background-size="cover"></image>
     <text class="userinfo-nickname">{{ sourceNickName }}</text>
 
-    <text style="font-size: 30rpx;color: #fff;margin-bottom: 20rpx;margin-top: 10rpx;">史上最好吃荔枝，快来帮我砍到最低价吧~</text>
+    <text class="textIntroduce">史上最好吃荔枝，快来帮我砍到最低价吧~</text>
 
-    <view style="display: flex;flex-direction: horizontal;width: 650rpx;height: 200rpx;background-color: #fff;">
-      <image mode="aspectFill" src="{{itemInfo.basicInfo.pic}}" style="width: 180rpx;padding-top:10rpx;padding-left:10rpx;height: 180rpx;"></image>
-      <view style="display: flex;flex-direction: column;align-items: left;font-size: 30rpx;">
-        <view style="flex-grow: 1;margin-top: 20rpx;margin-left: 20rpx;">{{itemInfo.basicInfo.name}}(20斤装)</view>
-        <view style="flex-grow: 1;margin-top: 20rpx;margin-left: 20rpx;">
-          <text style="margin-right: 60rpx;color: #e85654">底价￥{{minPrice}}</text>
-          <text style="color: gray;">原价￥{{originalPrice}}</text>
+    <view class="viewDetail">
+      <image mode="aspectFill" src="{{itemInfo.basicInfo.pic}}" class="viewImage"></image>
+      <view class="viewFlexContainer">
+        <view class="viewFlexName">{{itemInfo.basicInfo.name}}(20斤装)</view>
+        <view class="viewFlexPrice">
+          <text class="minPrice">底价</text><wxc-price class="wxc-price">{{minPrice}}</wxc-price>
+          <text class="originalPrice">原价</text><wxc-price status='del'>{{originalPrice}}</wxc-price>
         </view>
       </view>
     </view>
 
-    <view style="height:40rpx;line-height:40rpx;display:flex;color: #fff;margin-bottom: 20rpx;font-size: 30rpx;margin-top: 20rpx;">
-      <text>当前价 </text><wxc-price style="font-size: 40rpx;">{{currentPrice}}</wxc-price>
-      <text>, 已砍 </text><wxc-price style="font-size: 40rpx;">{{cutPrice}}</wxc-price>
+    <view class="viewCutPrice">
+      <text>当前价 </text><wxc-price class="wxcPrice">{{currentPrice}}</wxc-price>
+      <text>, 已砍 </text><wxc-price class="wxcPrice">{{cutPrice}}</wxc-price>
     </view>
-    <view style="display: flex;flex-direction: horizontal;color: #fff;font-size: 30rpx;">
-      <view style="margin-right: 10rpx;background: #e64340;width: 300rpx;height: 70rpx;line-height: 70rpx;text-align: center;border-radius: 10rpx;" bindtap="{{kjTap}}">{{kjMesg}}</view>
-      <view style="background: #e64340;width: 200rpx;height: 70rpx;line-height: 70rpx;text-align: center;border-radius: 10rpx;" bindtap="{{inviteTap}}">{{invite}}</view>
+    <view class="kjMessageContainer">
+      <view class="kjMessage" bindtap="{{kjTap}}">{{kjMesg}}</view>
+      <view class="inviteMessage" bindtap="{{inviteTap}}">{{invite}}</view>
     </view>
 
-    <wxc-countdown wx:if="{{!kjEnd}}" style="margin-top: 20rpx;font-size: 40rpx;color: white;" countdown="{{countdown}}" format="dd:hh:mm:ss" bind:endcount="endcount"></wxc-countdown>
-    <view wx:if="{{kjEnd}}" style="margin-top: 20rpx;color:white;font-size: 40rpx;">砍价已结束!</view>
+    <wxc-countdown wx:if="{{!kjEnd}}" class="countDown" countdown="{{countdown}}" format="dd:hh:mm:ss" bind:endcount="endcount"></wxc-countdown>
+    <view wx:if="{{kjEnd}}" class="kjEndMessage">砍价已结束!</view>
   </view>
 
-  <view style="width: 750rpx;height: 30rpx;background: rgba(232,86,84,0.9);text-align: center;">
-    <image src="../../images/sanjiao.png" style="width: 30rpx;height: 31rpx;z-index: 9"></image>
+  <view class="sanjiao">
+    <image src="../../images/sanjiao.png" class="image"></image>
   </view>
 
-  <view style="width: 750rpx;text-align: center;margin-top: 20rpx;color: #e85654;font-size: 25rpx;">{{helpers.length}}名好友帮砍</view>
+  <view class="helpersNum">{{helpers.length}}名好友帮砍</view>
 
-  <view wx:for="{{helpers}}">
-    <view style="display: flex;height: 150rpx;border-bottom: dashed 1rpx gray;">
-      <view style="margin-left: 10rpx;margin-top: 25rpx;">
-        <image class="helperinfo-avatar" src="{{ item.avatarUrl }}" background-size="cover"></image>
-      </view>
-      <view style="flex-grow: 1;margin-top: 40rpx;margin-left: 15rpx;font-size: 25rpx;">
-        <view>{{item.nick}}</view>
-        <view>{{item.dateAdd}}</view>
-      </view>
-      <view style="font-size: 25rpx;display: flex;">
-        <view><image src="../../images/kanjia.png" style="height: 50rpx;width: 50rpx;margin-top: 50rpx;"></image> </view>
-        <view style="margin-top: 55rpx;margin-left: 10rpx;margin-right: 10rpx;color:#e85654">砍掉{{item.cutPrice}}元</view>
-        
-      </view>
+ 
+  <view wx:for="{{helpers}}" class="helpersListContainer">
+    <view class="helpersListImage">
+      <image class="helperinfo-avatar" src="{{ item.avatarUrl }}" background-size="cover"></image>
+    </view>
+    <view class="helpersListName">
+      <view>{{item.nick}}</view>
+      <view>{{item.dateAdd}}</view>
+    </view>
+    <view class="kjValueContainer">
+      <view><image src="../../images/kanjia.png" class="kjIcon"></image> </view>
+      <view class="kjValue">砍掉{{item.cutPrice}}元</view>
+      
     </view>
   </view>
 </view>
 
 <wxc-popup animation-mode="none" align="center" status="{{popupStatus}}" locked="true">
-  <view style="background: rgba(232,86,84,0.9);width: 400rpx;height:500rpx;position: relative;">
-    <wxc-icon bindtap="closePopup" size="30" type="close" color="#fff" style="position: absolute;top:-5rpx;right: 10rpx;"></wxc-icon>
-    <view style="margin-top: 100rpx">
-      <view style="width: 400rpx;text-align: center;font-size: 33rpx;color:white;">
+  <view class="invitePopupContainer">
+    <wxc-icon bindtap="closePopup" size="30" type="close" color="#fff" class="invitePopupCloseIcon"></wxc-icon>
+    <view class="invitePopupTextContainer">
+      <view class="invitePopupText">
         恭喜！
       </view>
-      <view style="width: 400rpx;text-align: center;font-size: 30rpx;color:white;">
+      <view class="invitePopupText">
         砍价创建成功
       </view>
-      <view style="width: 400rpx;text-align: center;font-size: 30rpx;color:white;">
+      <view class="invitePopupText">
         快邀请好友来砍价吧！
       </view>
 
-      <view style="width: 400rpx;display: flex;margin-top: 30rpx;">
-          <view style="flex-grow: 1;display: flex;flex-direction: column;align-items: center;">
-            <button open-type="share" style="width: 100rpx;height: 100rpx;border-radius: 50%;background: url('http://xiaobeiblog-xiaochengxu.stor.sinaapp.com/lixiansen/images/share.png') no-repeat center center;background-color: #fff;">
+      <view class="inviteIconContainer">
+          <view class="inviteIconItem">
+            <button open-type="share" class="inviteShareButton">
             </button>
-            <view style="font-size: 25rpx;color:#fff;margin-top: 10rpx;">邀请好友</view>
+            <view class="inviteShareButtonText">邀请好友</view>
           </view>
-          <view style="flex-grow: 1;display: flex;flex-direction: column;align-items: center;">
-            <view bindtap="createErweima" style="width: 100rpx;height: 100rpx;border-radius: 50%;background: url('http://xiaobeiblog-xiaochengxu.stor.sinaapp.com/lixiansen/images/erweima.png') no-repeat center center;background-color: #fff;">
+          <view class="inviteIconItem">
+            <view bindtap="createErweima" class="inviteCreateButton">
             </view>
-            <view style="font-size: 25rpx;color:#fff;margin-top: 10rpx;">生成二维码</view>
+            <view class="inviteCreateButtonText">生成二维码</view>
           </view>
       </view>
     </view>
@@ -86,12 +85,12 @@
 </wxc-popup>
 
 <wxc-popup animation-mode="none" align="center" status="{{popupStatusImg}}" locked="hide">
-  <view style="width: 400rpx;height:500rpx;position: relative;">
-    <view style="width: 400rpx;height: 400rpx;">
-      <image mode="aspectFill" src="{{srcErweima}}" style="width: 100%;height: 100%;"></image>
+  <view class="saveErweimaContainer">
+    <view class="saveErweimaImageContainer">
+      <image mode="aspectFill" src="{{srcErweima}}" class="saveErweimaImage"></image>
     </view>
 
-    <button bindtap="saveImage" style="margin-top: 10rpx;">保存图片</button>
+    <button bindtap="saveImage" class="saveErweimaText">保存图片</button>
   </view>
 </wxc-popup>
 

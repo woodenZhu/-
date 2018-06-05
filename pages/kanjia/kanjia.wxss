@@ -41,3 +41,125 @@ page {
   /*margin: 20rpx;*/
   border-radius: 50%;
 }
+
+.imageToIndex {
+  position: absolute;top: 10rpx; left: 10rpx;width: 50rpx;height: 50rpx;
+}
+.textIntroduce {
+  font-size: 30rpx;color: #fff;margin-bottom: 20rpx;margin-top: 10rpx;
+}
+.viewDetail {
+  display: flex;flex-direction: horizontal;width: 650rpx;height: 200rpx;background-color: #fff;
+}
+.viewImage {
+  width: 180rpx;padding-top:10rpx;padding-left:10rpx;height: 180rpx;
+}
+.viewFlexContainer {
+  display: flex;flex-direction: column;align-items: left;font-size: 30rpx;
+}
+.viewFlexName {
+  flex-grow: 1;margin-top: 20rpx;margin-left: 20rpx;
+}
+.viewFlexPrice {
+  flex-grow: 1;margin-top: 20rpx;margin-left: 20rpx;
+}
+.minPrice {
+  color: #e85654
+}
+.wxc-price {
+  margin-right: 60rpx;
+  color: #e85654;
+}
+.originalPrice {
+  color: #999;
+}
+.viewCutPrice {
+  height:40rpx;line-height:40rpx;display:flex;color: #fff;margin-bottom: 20rpx;font-size: 30rpx;margin-top: 20rpx;
+}
+.wxcPrice {
+  font-size: 40rpx;
+}
+.kjMessageContainer {
+  display: flex;flex-direction: horizontal;color: #fff;font-size: 30rpx;
+}
+.kjMessage{
+  margin-right: 10rpx;background: #e64340;width: 300rpx;height: 70rpx;line-height: 70rpx;text-align: center;border-radius: 10rpx;
+}
+.inviteMessage {
+  background: #e64340;width: 200rpx;height: 70rpx;line-height: 70rpx;text-align: center;border-radius: 10rpx;
+}
+.countDown {
+  margin-top: 20rpx;font-size: 40rpx;color: white;
+}
+.kjEndMessage {
+  margin-top: 20rpx;color:white;font-size: 40rpx;
+}
+.sanjiao {
+  width: 750rpx;height: 30rpx;background: rgba(232,86,84,0.9);text-align: center;
+}
+.sanjiao .image {
+  width: 30rpx;height: 31rpx;z-index: 9
+}
+.helpersNum {
+  width: 750rpx;text-align: center;margin-top: 20rpx;color: #e85654;font-size: 25rpx;
+}
+.helpersListContainer {
+  display: flex;height: 150rpx;border-bottom: dashed 1rpx gray;
+}
+.helpersListImage {
+  margin-left: 10rpx;margin-top: 25rpx;
+}
+.helpersListName {
+  flex-grow: 1;margin-top: 40rpx;margin-left: 15rpx;font-size: 25rpx;
+}
+.kjValueContainer {
+  font-size: 25rpx;display: flex;
+}
+.kjIcon {
+  height: 50rpx;width: 50rpx;margin-top: 50rpx;
+}
+.kjValue {
+  margin-top: 55rpx;margin-left: 10rpx;margin-right: 10rpx;color:#e85654
+}
+.invitePopupContainer {
+  background: rgba(232,86,84,0.9);width: 400rpx;height:500rpx;position: relative;
+}
+.invitePopupCloseIcon {
+  position: absolute;top:-5rpx;right: 10rpx;
+}
+.invitePopupTextContainer {
+  margin-top: 100rpx
+}
+.invitePopupText {
+  width: 400rpx;text-align: center;font-size: 33rpx;color:white;
+}
+.inviteIconContainer {
+  width: 400rpx;display: flex;margin-top: 30rpx;
+}
+.inviteIconItem {
+  flex-grow: 1;display: flex;flex-direction: column;align-items: center;
+}
+.inviteShareButton {
+  width: 100rpx;height: 100rpx;border-radius: 50%;background: url('http://xiaobeiblog-xiaochengxu.stor.sinaapp.com/lixiansen/images/share.png') no-repeat center center;background-color: #fff;
+}
+.inviteShareButtonText {
+  font-size: 25rpx;color:#fff;margin-top: 10rpx;
+}
+.inviteCreateButton {
+  width: 100rpx;height: 100rpx;border-radius: 50%;background: url('http://xiaobeiblog-xiaochengxu.stor.sinaapp.com/lixiansen/images/erweima.png') no-repeat center center;background-color: #fff;
+}
+.inviteCreateButtonText {
+  font-size: 25rpx;color:#fff;margin-top: 10rpx;
+}
+.saveErweimaContainer {
+  width: 400rpx;height:500rpx;position: relative;
+}
+.saveErweimaImageContainer {
+  width: 400rpx;height: 400rpx;
+}
+.saveErweimaImage {
+  width: 100%;height: 100%;
+}
+.saveErweimaText {
+  margin-top: 10rpx;
+}

@@ -180,7 +180,7 @@ swiper-item image {
 .price {
   width: 280rpx;
   overflow: hidden;
-  font-size: 24rpx;
+  font-size: 30rpx;
   padding: 24rpx 0;
   color:#e64340;
   margin-left: 24rpx;
@@ -190,7 +190,7 @@ swiper-item image {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  font-size: 24rpx;
+  font-size: 30rpx;
   padding: 24rpx 0 0rpx 0;
   color:#000;
   margin-left: 24rpx;

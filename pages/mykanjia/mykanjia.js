@@ -3,44 +3,33 @@
 var app = getApp()
 Page({
   data: {
-    coupons:[]
+    kjlist: []
   },
   onLoad: function () {
+    var kjStr = wx.getStorageSync('kjid');
+    var kjArr = kjStr.split('&');
+    var kjlist = [];
+    for(var i = 0; i < kjArr.length; i++) {
+      var item = JSON.parse(wx.getStorageSync(kjArr[i]));
+      var dateEnd = new Date(item.dateEnd);
+      var dateNow = new Date();
+      item.state = dateEnd.getTime() - dateNow.getTime() > 0 ? '进行中' : '已完成';
+      kjlist.push(item);
+    }
+    this.setData({
+      kjlist: kjlist
+    })
   },
   onShow : function () {
-    this.getMyCoupons();
-  },
-  getMyCoupons: function () {
-    var that = this;
-    var token = wx.getStorageSync('token');
-    wx.request({
-      url: 'https://api.it120.cc/' + app.globalData.subDomain + '/discounts/my',
-      data: {
-        token: token,
-        status: 0
-      },
-      success: function (res) {
-        if (res.data.code == 0) {
-          var coupons = res.data.data;
-          if (coupons.length > 0) {
-            that.setData({
-              coupons: coupons
-            });
-          }
-        }
-        console.log(that.data.coupons);
-      }
-    })
-  },
-  goBuy:function(){
-    wx.reLaunch({
-      url: '/pages/index/index'
-    })
-  },
-  toFindPage: function() {
-    wx.switchTab({
-      url: "/pages/finder/finder"
-    });
-  }
 
+  },
+  routeToKanjia: function(e) {
+    var kjid = e.currentTarget.dataset.kjid;
+    var goodsid = e.currentTarget.dataset.goodsid;
+    var userid = wx.getStorageSync('uid');
+    wx.navigateTo({
+      url: '/pages/kanjia/kanjia?kjid='+kjid+'&goodsid='
+        +goodsid+'&userid='+userid
+    })
+  }
 })

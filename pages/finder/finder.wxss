@@ -177,3 +177,42 @@ page {
   text-align: center;
   font-size:28rpx;
 }
+.borderbg1 {
+  width: 750rpx;height: 20rpx;background: #f2f2f2;
+}
+.borderbg2 {
+  width: 750rpx;height: 2rpx;background: #f2f2f2;
+}
+.kanjiaContainer {
+  display:flex;width: 750rpx; height: 250rpx;background: #fff;border-bottom: thick #f2f2f2 solid;
+}
+.kanjiaContainer .image {
+  height: 200rpx; width: 200rpx;padding-top: 25rpx;padding-left: 20rpx;flex-grow: 0;
+}
+.kanjialist {
+  display: flex;flex-direction: column;flex-grow: 1;
+}
+.kanjialist .top {
+  padding-top: 10%; padding-left: 20rpx;
+}
+.kanjialist .center {
+  flex-grow: 1;
+  margin-top: 10rpx;
+  margin-left: 20rpx;
+  margin-top: 20rpx;
+}
+.price {
+  color:#e85654;
+  margin-right: 50rpx;
+}
+.kanjialist .bottom {
+  flex-grow: 1;
+  margin-left: 20rpx;
+  align-self: flex-end;margin-right: 20rpx;
+}
+.textRed {
+  color: #e85654;
+}
+.textGray {
+  color: #999;
+}

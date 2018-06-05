@@ -36,9 +36,9 @@
   </view>
 
   <view class="border-bg"></view>
-  <view style="width: 750rpx;">
-    <button style="float:left;margin-left: 20rpx;" class="button-item" open-type="contact">联系客服</button>
-    <button style="float:right;margin-right: 20rpx;" class="button-item" bindtap="relogin">重新授权登录</button>
+  <view class="bottom">
+    <button class="button-item kefu" open-type="contact">联系客服</button>
+    <button class="button-item relogin" bindtap="relogin">重新授权登录</button>
   </view>
   
   <view class="border-bg"></view>

@@ -244,7 +244,13 @@ Page({
     var kjid = e.currentTarget.dataset.kjid;
     var goodsid = e.currentTarget.dataset.goodsid;
     var userid = wx.getStorageSync('uid');
-    
+    var item = {};
+    for(var i = 0; i < this.data.kanJiaList.length; i++) {
+      if(kjid == this.data.kanJiaList[i].id) {
+        item = this.data.kanJiaList[i];
+        break;
+      }
+    }//缓存具体的砍价项目，用于我的砍价页面展示
     if(!wx.getStorageSync('token')) {
       wx.navigateTo({
         url: "/pages/authorize/authorize"
@@ -267,6 +273,13 @@ Page({
               },
               success: function(res) {
                 if(res.data.code == 0) {
+                  if(wx.getStorageSync('kjid')) {
+                    var newkjid = wx.getStorageSync('kjid') + '&' + kjid;
+                    wx.setStorageSync('kjid', newkjid);
+                  }else {
+                    wx.setStorageSync('kjid',kjid.toString());
+                  }
+                  wx.setStorageSync(kjid.toString(), JSON.stringify(item));
                   wx.navigateTo({
                     url: '/pages/kanjia/kanjia?kjid='+kjid+'&goodsid='
                       +goodsid+'&userid='+userid

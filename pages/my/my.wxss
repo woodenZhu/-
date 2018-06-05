@@ -80,3 +80,15 @@ page {
     line-height: 100rpx;
     padding-left: 100rpx;
 }
+
+.kefu {
+  float:left;
+  margin-left: 20rpx;
+}
+.relogin {
+  float:right;
+  margin-right: 20rpx;
+}
+.bottom {
+  width: 750rpx;
+}
