@@ -7,18 +7,21 @@ Page({
   },
   onLoad: function () {
     var kjStr = wx.getStorageSync('kjid');
-    var kjArr = kjStr.split('&');
-    var kjlist = [];
-    for(var i = 0; i < kjArr.length; i++) {
-      var item = JSON.parse(wx.getStorageSync(kjArr[i]));
-      var dateEnd = new Date(item.dateEnd);
-      var dateNow = new Date();
-      item.state = dateEnd.getTime() - dateNow.getTime() > 0 ? '进行中' : '已完成';
-      kjlist.push(item);
+    if(kjStr) {
+      var kjArr = kjStr.split('&');
+      var kjlist = [];
+      for(var i = 0; i < kjArr.length; i++) {
+        var item = JSON.parse(wx.getStorageSync(kjArr[i]));
+        var dateEnd = new Date(item.dateEnd);
+        var dateNow = new Date();
+        item.state = dateEnd.getTime() - dateNow.getTime() > 0 ? '进行中' : '已完成';
+        kjlist.push(item);
+      }
+      this.setData({
+        kjlist: kjlist
+      })
     }
-    this.setData({
-      kjlist: kjlist
-    })
+    
   },
   onShow : function () {
 

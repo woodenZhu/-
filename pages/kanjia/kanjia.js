@@ -238,9 +238,11 @@ Page({
   buliduBuyNowInfo: function () {
     
     var properties = this.data.itemInfo.properties;
-    var childsCurGoods = properties[0].childsCurGoods;
-    var propertyChildIds = properties[properties.length - 1].id + ':' + childsCurGoods[childsCurGoods.length - 1].id;
-    var propertyChildNames = properties[properties.length - 1].name + ':' + childsCurGoods[childsCurGoods.length - 1].name;
+    // var childsCurGoods = properties[0].childsCurGoods;
+    // var propertyChildIds = properties[properties.length - 1].id + ':' + childsCurGoods[childsCurGoods.length - 1].id;
+    // var propertyChildNames = properties[properties.length - 1].name + ':' + childsCurGoods[childsCurGoods.length - 1].name;
+    var propertyChildIds = '';
+    var propertyChildNames = '';
     var shopCarMap = {};
     shopCarMap.goodsId = this.data.itemInfo.basicInfo.id;
     shopCarMap.pic = this.data.itemInfo.basicInfo.pic;

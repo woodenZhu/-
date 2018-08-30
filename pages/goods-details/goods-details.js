@@ -10,8 +10,6 @@ Page({
     duration: 1000,
     goodsDetail:{},
     swiperCurrent: 0,  
-    hasMoreSelect:false,
-    selectSize:"选择：",
     selectSizePrice:0,
     totalScoreToPay: 0,
     shopNum:0,
@@ -59,25 +57,13 @@ Page({
         id: e.id
       },
       success: function(res) {
-        var selectSizeTemp = "";
-        if (res.data.data.properties) {
-          for(var i=0;i<res.data.data.properties.length;i++){
-            selectSizeTemp = selectSizeTemp + " " + res.data.data.properties[i].name;
-          }
-          that.setData({
-            hasMoreSelect:true,
-            selectSize:that.data.selectSize + selectSizeTemp,
-            selectSizePrice:res.data.data.basicInfo.originalPrice,
-            totalScoreToPay: res.data.data.basicInfo.minScore
-          });
-        }
         that.data.goodsDetail = res.data.data;
         if (res.data.data.basicInfo.videoId) {
           that.getVideoSrc(res.data.data.basicInfo.videoId);
         }
         that.setData({
           goodsDetail:res.data.data,
-          selectSizePrice:res.data.data.basicInfo.originalPrice,
+          selectSizePrice:res.data.data.basicInfo.minPrice,
           totalScoreToPay: res.data.data.basicInfo.minScore,
           buyNumMax:res.data.data.basicInfo.stores,
           buyNumber:(res.data.data.basicInfo.stores>0) ? 1: 0

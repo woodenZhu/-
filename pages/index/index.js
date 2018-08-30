@@ -26,20 +26,10 @@ Page({
   },
 
   //事件处理函数
-  swiperchange: function(e) {
-       this.setData({  
-        swiperCurrent: e.detail.current  
-    })  
-  },
   toDetailsTap:function(e){
     wx.navigateTo({
       url:"/pages/goods-details/goods-details?id="+e.currentTarget.dataset.id
     })
-  },
-  bindTypeTap: function(e) {
-     this.setData({  
-        selectCurrent: e.index  
-    })  
   },
   onLoad: function (option) {
     var that = this

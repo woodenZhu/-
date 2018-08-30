@@ -48,50 +48,21 @@ swiper-item image {
   position: relative;
 }
 
-.goods-info-fx {
-  position: absolute;
-  width: 50px;
-  height: 60px;
-  right: 0;
-  top: 0;
-}
-
-.goods-info-fx button {
-  position: absolute;
-  width: 50px;
-  height: 60px;
-  top: 0;
-  left: 0;
-  z-index: 2;
-  opacity: 0;
-}
-
-.goods-info-fx image {
-  width: 30px;
-  height: 30px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 1;
-  margin: 10px 10px 0 5px;
-}
-
-.goods-info-fx text {
-  position: absolute;
-  bottom: 3px;
-  left: 0;
-  z-index: 1;
-  font-size: 10px;
-  text-align: center;
-}
 .goods-info .goods-title{
+  box-sizing: border-box;
+  padding: 0 35rpx;
+  font-size: 35rpx;
+  line-height: 1.4;
+  color: #000;
+  margin-bottom: 10rpx;
+}
+.goods-info .goods-subtitle{
   box-sizing: border-box;
   padding: 0 35rpx;
   font-size: 32rpx;
   line-height: 1.4;
-  color: #000;
+  color: #aaa;
   margin-bottom: 28rpx;
-  padding-right: 60px;
 }
 .goods-info .goods-share{
   box-sizing: border-box;
@@ -109,20 +80,7 @@ swiper-item image {
    width: 30%;
    float:left;
 }
-.row-arrow{
-  width: 100%;
-  box-sizing: border-box;
-  padding: 0  120rpx 0 35rpx;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-  height: 102rpx;
-  font-size: 28rpx;
-  line-height: 102rpx;
-  margin-bottom: 28rpx;
-  background: #fff url(https://cdn.it120.cc/images/weappshop/arrow-right.png) no-repeat 697rpx center;
-  background-size: 18rpx auto;
-}
+
 .goods-des-info{
   width: 100%;
   box-sizing: border-box;
@@ -140,12 +98,7 @@ swiper-item image {
   line-height: 56rpx;
   margin-bottom: 30rpx;
 }
-.des-imgs{
-  width:100%;
-}
-.des-imgs image{
-  width: 100%;
-}
+
 .footer-box{
   width: 100%;
   height: 100rpx;
@@ -156,22 +109,7 @@ swiper-item image {
   display: flex;
   box-shadow:0 0 8rpx 0 ;
 }
-.footer-box .contact {
-  position: relative;
-  width: 120rpx;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  /*line-height: 100rpx;
-  text-align: center;
-  padding-top: 26rpx;*/
-  font-size: 20rpx;
-  color: #008000;
-  box-sizing: border-box;
-  background: url("https://cdn.it120.cc/images/weappshop/kefu.png") no-repeat center 21rpx;
-  background-size: 55rpx auto;
-}
+
 .footer-box .shop-cart-btn {
   position: relative;
   width: 135rpx;
@@ -341,4 +279,33 @@ swiper-item image {
 }
 .buy-num-box .num-box .hui{
   background-color: #f5f5f9;
+}
+
+.flex-wrp {
+  width: 430rpx;
+  height: 40rpx;
+  background-color: #fff;
+  padding-left: 35rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-end;
+}
+.flex-wrp .goods-minPrice {
+  font-size: 35rpx;
+  font-weight: bold;
+  color:  #e64340;
+}
+
+.flex-wrp .goods-originalPrice {
+  padding-left: 10rpx;
+  font-size: 30rpx;
+  text-decoration:line-through;
+  color: #aaa;
+}
+
+.goods-buytimes {
+  padding-left: 10rpx;
+  font-size: 30rpx;
+  height: 50rpx;
 }
