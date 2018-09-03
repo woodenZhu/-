@@ -4,7 +4,7 @@
     <view class="zan-cell__bd" style='padding: 30rpx 30rpx;'>
       <template is="zan-steps" data="{{ type: 'horizon', hasDesc: true, steps: statusSteps }}"></template>
     </view>
-    <!--<view class="order-status">
+    <view class="order-status">
       <view class="icon-box">
         <image wx:if="{{orderDetail.orderInfo.status==-1}}" class="icon" src="/images/order-details/icon-ddgb.png"></image>
         <image wx:elif="{{orderDetail.orderInfo.status==0}}" class="icon" src="/images/order-details/icon-ddfk.png"></image>
@@ -16,7 +16,7 @@
         <view class="status red">{{orderDetail.orderInfo.statusStr}}</view>
         <view class="des" hidden="true">请于11时59分59秒内付款，超时订单将自动关闭</view>
       </view>
-    </view>-->
+    </view>
     <block wx:if="{{orderDetail.logistics}}">
       <view wx:if="{{orderDetail.logisticsTraces}}" class="wuliu-box">
         <view class="icon-box">

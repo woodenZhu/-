@@ -15,17 +15,6 @@ App({
       }
     })
     wx.request({
-      url: 'https://api.it120.cc/'+ that.globalData.subDomain +'/config/get-value',
-      data: {
-        key: 'tuijian'
-      },
-      success: function(res) {
-        if (res.data.code == 0) {
-          wx.setStorageSync('tuijian', res.data.data.value);
-        }
-      }
-    })
-    wx.request({
       url: 'https://api.it120.cc/' + that.globalData.subDomain + '/score/send/rule',
       data: {
         code: 'goodReputation'
@@ -130,7 +119,7 @@ App({
     userInfo:null,
     subDomain: "guoyz", // 如果你的域名是： https://api.it120.cc/abcd 那么这里只要填写 abcd
     version: "2.0",
-    shareProfile: '荔红商城荔荔鲜' // 首页转发的时候话术
+    shareProfile: 'AYL 7级防水运动蓝牙耳机' // 首页转发的时候话术
   }
   /*
   根据自己需要修改下单时候的模板消息内容设置，可增加关闭订单、收货时候模板消息提醒；

@@ -29,11 +29,6 @@
     </navigator>
   </view>
   <view class="border-bg"></view>
-  
-  <view class="about" bindtap="aboutUs">
-    <wxc-icon type='help' size='45' color='#999999'></wxc-icon>
-    <text class="text">关于我们</text> 
-  </view>
 
   <view class="border-bg"></view>
   <view class="bottom">

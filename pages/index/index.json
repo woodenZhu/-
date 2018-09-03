@@ -1,7 +1,6 @@
 {
-    "navigationBarTitleText": "荔鲜森",
+    "navigationBarTitleText": "AYL",
     "usingComponents": {
-    "wxc-popup": "../../dist/packages/@minui/wxc-popup/dist/index",
     "wxc-icon": "../../dist/packages/@minui/wxc-icon/dist/index",
     "wxc-price": "../../dist/packages/@minui/wxc-price/dist/index"
   }

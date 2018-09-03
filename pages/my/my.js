@@ -46,7 +46,6 @@ Page({
       })
   },
   makePhoneCall: function () {
-    console.log("call");
     var that = this;
     wx.makePhoneCall({
       phoneNumber: that.data.servicePhoneNumber,

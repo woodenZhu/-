@@ -3,7 +3,7 @@
     <view wx:for="{{kjlist}}" class="viewContainer" data-kjid="{{item.id}}" data-goodsid="{{item.goodsId}}" bindtap='routeToKanjia'>
       <image mode="aspectFill" src="{{item.pic}}" class="image"></image>
       <view class="viewFlex">
-        <view class="top">{{item.name}}(20斤装)</view>
+        <view class="top">{{item.name}}</view>
         <view class="center">
           <text class="textRed">底价</text><wxc-price class="price">{{item.minPrice}}</wxc-price>
           <text class="textGray">原价</text><wxc-price status='del'>{{item.originalPrice}}</wxc-price>
@@ -16,6 +16,6 @@
 
   <view wx:else>
       <view class="title-box">没有参与砍价</view>
-      <view class="to-index-btn" bindtap="toFindPage">去砍价</view> 
+      <view class="to-index-btn" bindtap="toIndexPage">去砍价</view> 
   </view>
 </view>

@@ -6,22 +6,31 @@ Page({
     kjlist: []
   },
   onLoad: function () {
-    var kjStr = wx.getStorageSync('kjid');
-    if(kjStr) {
-      var kjArr = kjStr.split('&');
+    if(wx.getStorageSync('kjid')) {
+      var kjStr = wx.getStorageSync('kjid');
       var kjlist = [];
-      for(var i = 0; i < kjArr.length; i++) {
-        var item = JSON.parse(wx.getStorageSync(kjArr[i]));
+      if(kjStr.indexOf('&') > -1) {
+        var kjArr = kjStr.split('&');
+        for(var i = 0; i < kjArr.length; i++) {
+          var item = JSON.parse(wx.getStorageSync(kjArr[i]));
+          var dateEnd = new Date(item.dateEnd);
+          var dateNow = new Date();
+          item.state = dateEnd.getTime() - dateNow.getTime() > 0 ? '进行中' : '已完成';
+          kjlist.push(item);
+        }
+      }else {
+        console.log("item")
+        var item = JSON.parse(wx.getStorageSync(kjStr));
+        console.log(item)
         var dateEnd = new Date(item.dateEnd);
         var dateNow = new Date();
         item.state = dateEnd.getTime() - dateNow.getTime() > 0 ? '进行中' : '已完成';
-        kjlist.push(item);
+        kjlist.push(item)
       }
       this.setData({
         kjlist: kjlist
       })
     }
-    
   },
   onShow : function () {
 
@@ -33,6 +42,11 @@ Page({
     wx.navigateTo({
       url: '/pages/kanjia/kanjia?kjid='+kjid+'&goodsid='
         +goodsid+'&userid='+userid
+    })
+  },
+  toIndexPage: function(){
+    wx.reLaunch({
+      url: "/pages/index/index"
     })
   }
 })

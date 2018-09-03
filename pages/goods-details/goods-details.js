@@ -17,7 +17,9 @@ Page({
     buyNumber:0,
     buyNumMin:1,
     buyNumMax:0,
-
+    kjId: '',
+    goodsId: '',
+    kjItem: {},
     propertyChildIds:"",
     propertyChildNames:"",
     canSubmit:false, //  选中规格尺寸时候是否允许加入购物车
@@ -40,7 +42,7 @@ Page({
       })
     }
     var that = this;
-    that.data.kjId = e.kjId;
+    that.data.goodsId = e.id;
     // 获取购物车数据
     wx.getStorage({
       key: 'shopCarInfo',
@@ -71,12 +73,92 @@ Page({
         WxParse.wxParse('article', 'html', res.data.data.content, that, 5);
       }
     })
-    this.reputation(e.id);
+    this.getKanjiaList(e.id);
   },
   goShopCar: function () {
     wx.reLaunch({
       url: "/pages/shop-cart/shop-cart"
     });
+  },
+  getKanjiaList: function(goodsId) {
+    var that = this;
+    wx.request({
+      url: 'https://api.it120.cc/'+ app.globalData.subDomain +'/shop/goods/kanjia/list',
+      success: function(res) {
+        if(res.data.code == 0) {
+          for(var i = 0; i < res.data.data.result.length; i++) {
+            var item = res.data.data.result[i];
+            if(item.goodsId == goodsId) {
+              item.name = wx.getStorageSync(item.goodsId.toString());
+              item.pic = wx.getStorageSync(item.goodsId + 'pic');
+              that.data.kjId = item.id;
+              that.data.kjItem = item;
+              break;
+            }
+          }
+        }
+        
+      }
+    })
+  },
+  toKanjia: function() {
+    var that = this;
+    if(!wx.getStorageSync('token')) {
+      wx.navigateTo({
+        url: "/pages/authorize/authorize"
+      })
+    }else {
+      var token = wx.getStorageSync('token');
+      var kjid = that.data.kjId;
+      var goodsid =that.data.goodsId;
+      var userid = wx.getStorageSync('uid');
+      wx.request({
+        url: 'https://api.it120.cc/' + app.globalData.subDomain + '/shop/goods/kanjia/my',
+        data: {
+          kjid: kjid,
+          token: token
+        },
+        success: function(res) {
+          if(res.data.code != 0) {
+            wx.request({
+              url: 'https://api.it120.cc/' + app.globalData.subDomain + '/shop/goods/kanjia/join',
+              data: {
+                kjid: kjid,
+                token: token
+              },
+              success: function(res) {
+                if(res.data.code == 0) {
+                  if(wx.getStorageSync('kjid')) {
+                    var newkjid = wx.getStorageSync('kjid') + '&' + kjid;
+                    wx.setStorageSync('kjid', newkjid);
+                  }else {
+                    wx.setStorageSync('kjid',kjid.toString());
+                  }
+                  wx.setStorageSync(kjid.toString(), JSON.stringify(that.data.kjItem));
+                  wx.navigateTo({
+                    url: '/pages/kanjia/kanjia?kjid='+kjid+'&goodsid='
+                      +goodsid+'&userid='+userid
+                  })
+                }else {
+                  wx.showModal({
+                    title: '请稍等',
+                    content: '砍价尚未开始',
+                    showCancel: false
+                  })
+                }
+                
+              }
+            })
+          }else {
+            wx.navigateTo({
+              url: '/pages/kanjia/kanjia?kjid='+kjid+'&goodsid='
+                +goodsid+'&userid='+userid
+            })
+          }
+        }
+      })
+      
+    }
   },
   toAddShopCar: function () {
     this.setData({
@@ -366,7 +448,7 @@ Page({
       buyNowInfo.shopList = [];
     }
     buyNowInfo.shopList.push(shopCarMap);
-    buyNowInfo.kjId = this.data.kjId;
+    buyNowInfo.kjId = '';
     return buyNowInfo;
   },   
   onShareAppMessage: function () {
@@ -380,23 +462,6 @@ Page({
         // 转发失败
       }
     }
-  },
-  reputation: function (goodsId) {
-    var that = this;
-    wx.request({
-      url: 'https://api.it120.cc/' + app.globalData.subDomain + '/shop/goods/reputation',
-      data: {
-        goodsId: goodsId
-      },
-      success: function (res) {
-        if (res.data.code == 0) {
-          //console.log(res.data.data);
-          that.setData({
-            reputation: res.data.data
-          });
-        }
-      }
-    })
   },
   goToIndex: function() {
     wx.reLaunch({

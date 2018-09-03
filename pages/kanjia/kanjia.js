@@ -1,10 +1,9 @@
 var app = getApp();
+var util = require('../../utils/util.js')
 Page({
   data: {
     kjMesg: '',
     kjTap: '',
-    currentId: '',
-    sourceId: '',
     currentPrice: 0,
     cutPrice: 0,
     itemInfo: {},
@@ -31,6 +30,11 @@ Page({
     that.setData({
       option: optionObj
     })
+    if(!wx.getStorageSync('token')) {
+      wx.navigateTo({
+        url: "/pages/authorize/authorize"
+      })
+    }
     wx.request({
       url: 'https://api.it120.cc/'+ app.globalData.subDomain +'/shop/goods/kanjia/list',
       success: function(res) {
@@ -49,14 +53,14 @@ Page({
         }
       }
     })
-    if(!wx.getStorageSync('token')) {
-      wx.navigateTo({
-        url: "/pages/authorize/authorize"
-      })
-    }
   },
   onShow: function() {
     this.getItemInfo();
+  },
+  toDetailsTap: function() {
+    wx.navigateTo({
+      url:"/pages/goods-details/goods-details?id="+this.data.itemInfo.basicInfo.id
+    })
   },
   goToIndex: function() {
     wx.reLaunch({
@@ -71,7 +75,7 @@ Page({
       })
     }
     return {
-      title: '我发现一件好物，来帮我砍价吧~',
+      title: 'AYL 7级防水蓝牙耳机，来帮我砍价吧~',
       path: '/pages/kanjia/kanjia?kjid='+that.data.option.kjid+'&goodsid='+that.data.option.goodsid+'&userid='+that.data.option.userid,
       success: function (res) {
         // 转发成功
@@ -218,9 +222,63 @@ Page({
     })
   },
   goToKanjia: function() {
-    wx.reLaunch({
-      url: "/pages/finder/finder"
-    });
+    var that = this;
+    if(!wx.getStorageSync('token')) {
+      wx.navigateTo({
+        url: "/pages/authorize/authorize"
+      })
+    }else {
+      var token = wx.getStorageSync('token');
+      var kjid = that.data.option.kjid;
+      var goodsid =that.data.option.goodsid;
+      var userid = wx.getStorageSync('uid');
+      wx.request({
+        url: 'https://api.it120.cc/' + app.globalData.subDomain + '/shop/goods/kanjia/my',
+        data: {
+          kjid: kjid,
+          token: token
+        },
+        success: function(res) {
+          if(res.data.code != 0) {
+            wx.request({
+              url: 'https://api.it120.cc/' + app.globalData.subDomain + '/shop/goods/kanjia/join',
+              data: {
+                kjid: kjid,
+                token: token
+              },
+              success: function(res) {
+                if(res.data.code == 0) {
+                  if(wx.getStorageSync('kjid')) {
+                    var newkjid = wx.getStorageSync('kjid') + '&' + kjid;
+                    wx.setStorageSync('kjid', newkjid);
+                  }else {
+                    wx.setStorageSync('kjid',kjid.toString());
+                  }
+                  wx.setStorageSync(kjid.toString(), JSON.stringify(that.item));
+                  wx.navigateTo({
+                    url: '/pages/kanjia/kanjia?kjid='+kjid+'&goodsid='
+                      +goodsid+'&userid='+userid
+                  })
+                }else {
+                  wx.showModal({
+                    title: '错误',
+                    content: '砍价尚未开始',
+                    showCancel: false
+                  })
+                }
+                
+              }
+            })
+          }else {
+            wx.navigateTo({
+              url: '/pages/kanjia/kanjia?kjid='+kjid+'&goodsid='
+                +goodsid+'&userid='+userid
+            })
+          }
+        }
+      })
+      
+    }
   },
   addtr: function(arg1, arg2) {
     var r1,r2,m,n; 
@@ -282,11 +340,17 @@ Page({
     var scene = kjid + ',' + goodsid + ',' + userid;
     wx.request({
       url: 'https://api.it120.cc/guoyz/qrcode/wxa/unlimit',
-      data: {
-        scene: scene,
-        path: '/pages/finder/finder'
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded"
       },
+      method: 'POST',
+      data: util.json2Form({
+        scene: scene,
+        path: 'pages/kanjia/kanjia'
+      }),
       success: function(res) {
+        console.log("erwerima")
+        console.log(res.data.data)
         that.setData({
           popupStatus: 'hide',
           popupStatusImg: 'show',

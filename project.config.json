@@ -30,14 +30,28 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": -1,
+			"current": 2,
 			"list": [
 				{
 					"id": 0,
 					"name": "获取二维码",
 					"pathName": "pages/kanjia/kanjia",
-					"query": "scene=255,48546,395490",
+					"query": "kjid=461&goodsid=78671&userid=395490",
 					"scene": "1012"
+				},
+				{
+					"id": -1,
+					"name": "test",
+					"pathName": "pages/kanjia/kanjia",
+					"query": "kjid=461&goodsid=78671&userid=395490",
+					"scene": "1012"
+				},
+				{
+					"id": -1,
+					"name": "获取二维码",
+					"pathName": "pages/kanjia/kanjia",
+					"query": "kjid=461&goodsid=78671&userid=395490",
+					"scene": "1048"
 				}
 			]
 		}

@@ -1,5 +1,5 @@
 {
-    "navigationBarTitleText": "荔鲜森",
+    "navigationBarTitleText": "AYL",
     "usingComponents": {
     "wxc-icon": "../../dist/packages/@minui/wxc-icon/dist/index"
   }

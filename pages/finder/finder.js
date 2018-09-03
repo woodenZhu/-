@@ -42,7 +42,6 @@ Page({
 
     that.getCouponsTitlePicStr();
     that.getCoupons();
-    that.getKanjia();
   },
   getCouponsTitlePicStr: function () {
     var that = this;
@@ -62,44 +61,6 @@ Page({
     })
   },
   //事件处理函数
-  getGoodsList: function (categoryId) {
-    if (categoryId == 0) {
-      categoryId = "";
-    }
-    var that = this;
-    wx.request({
-      url: 'https://api.it120.cc/' + app.globalData.subDomain + '/shop/goods/list',
-      data: {
-        page: that.data.page,
-        pageSize: that.data.pageSize,
-        categoryId: categoryId
-      },
-      success: function (res) {
-        that.setData({
-          goods: [],
-          loadingMoreHidden: true
-        });
-        var goods = [];
-        if (res.data.code != 0 || res.data.data.length == 0) {
-          that.setData({
-            loadingMoreHidden: false,
-            prePageBtn: false,
-            nextPageBtn: true,
-            toBottom: true
-          });
-          return;
-        }
-        for (var i = 0; i < res.data.data.length; i++) {
-          goods.push(res.data.data[i]);
-        }
-        for (let i = 0; i < goods.length; i++) {
-          goods[i].starscore = (goods[i].numberGoodReputation / goods[i].numberOrders) * 5
-          goods[i].starscore = Math.ceil(goods[i].starscore / 0.5) * 0.5
-          goods[i].starpic = starscore.picStr(goods[i].starscore)
-        }
-      }
-    })
-  },
   getCoupons: function () {
     var that = this;
     wx.request({
@@ -222,87 +183,4 @@ Page({
       }
     })
   },
-  getKanjia() {
-    var that = this;
-    wx.request({
-      url: 'https://api.it120.cc/'+ app.globalData.subDomain +'/shop/goods/kanjia/list',
-      success: function(res) {
-        var kanJiaList = [];
-        for(var i = 0; i < res.data.data.result.length; i++) {
-          var item = res.data.data.result[i];
-          item.name = wx.getStorageSync(item.goodsId.toString());
-          item.pic = wx.getStorageSync(item.goodsId + 'pic');
-          kanJiaList.push(item);
-        }
-        that.setData({
-          kanJiaList: kanJiaList
-        })
-      }
-    })
-  },
-  goKanJia: function(e) {
-    var kjid = e.currentTarget.dataset.kjid;
-    var goodsid = e.currentTarget.dataset.goodsid;
-    var userid = wx.getStorageSync('uid');
-    var item = {};
-    for(var i = 0; i < this.data.kanJiaList.length; i++) {
-      if(kjid == this.data.kanJiaList[i].id) {
-        item = this.data.kanJiaList[i];
-        break;
-      }
-    }//缓存具体的砍价项目，用于我的砍价页面展示
-    if(!wx.getStorageSync('token')) {
-      wx.navigateTo({
-        url: "/pages/authorize/authorize"
-      })
-    }else {
-      var token = wx.getStorageSync('token');
-      wx.request({
-        url: 'https://api.it120.cc/' + app.globalData.subDomain + '/shop/goods/kanjia/my',
-        data: {
-          kjid: kjid,
-          token: token
-        },
-        success: function(res) {
-          if(res.data.code != 0) {
-            wx.request({
-              url: 'https://api.it120.cc/' + app.globalData.subDomain + '/shop/goods/kanjia/join',
-              data: {
-                kjid: kjid,
-                token: token
-              },
-              success: function(res) {
-                if(res.data.code == 0) {
-                  if(wx.getStorageSync('kjid')) {
-                    var newkjid = wx.getStorageSync('kjid') + '&' + kjid;
-                    wx.setStorageSync('kjid', newkjid);
-                  }else {
-                    wx.setStorageSync('kjid',kjid.toString());
-                  }
-                  wx.setStorageSync(kjid.toString(), JSON.stringify(item));
-                  wx.navigateTo({
-                    url: '/pages/kanjia/kanjia?kjid='+kjid+'&goodsid='
-                      +goodsid+'&userid='+userid
-                  })
-                }else {
-                  wx.showModal({
-                    title: '错误',
-                    content: '砍价尚未开始',
-                    showCancel: false
-                  })
-                }
-                
-              }
-            })
-          }else {
-            wx.navigateTo({
-              url: '/pages/kanjia/kanjia?kjid='+kjid+'&goodsid='
-                +goodsid+'&userid='+userid
-            })
-          }
-        }
-      })
-      
-    }
-  }
 })

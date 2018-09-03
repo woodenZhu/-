@@ -4,7 +4,15 @@
   background-color: #fff;
   min-height: 100%;
 }
-
+.remind-box {
+  width: 200rpx;
+  height: 200rpx;
+  margin-top: 50%;
+}
+.remind-img {
+  width: 100%;
+  height: 100%;
+}
 .swiper_box {
   width: 90%;
   height:862.5rpx;

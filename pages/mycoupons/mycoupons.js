@@ -28,7 +28,6 @@ Page({
             });
           }
         }
-        console.log(that.data.coupons);
       }
     })
   },

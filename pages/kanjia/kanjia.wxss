@@ -43,7 +43,7 @@ page {
 }
 
 .imageToIndex {
-  position: absolute;top: 10rpx; left: 10rpx;width: 50rpx;height: 50rpx;
+  position: absolute;top: 10rpx; left: 10rpx;width: 60rpx;height: 60rpx;
 }
 .textIntroduce {
   font-size: 30rpx;color: #fff;margin-bottom: 20rpx;margin-top: 10rpx;

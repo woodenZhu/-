@@ -4,12 +4,12 @@
     <image class="userinfo-avatar" src="{{ sourcePic }}" background-size="cover"></image>
     <text class="userinfo-nickname">{{ sourceNickName }}</text>
 
-    <text class="textIntroduce">史上最好吃荔枝，快来帮我砍到最低价吧~</text>
+    <text class="textIntroduce">IPX7 级防水运动蓝牙耳机，快来帮我砍到最低价吧~</text>
 
-    <view class="viewDetail">
+    <view class="viewDetail" bindtap="toDetailsTap">
       <image mode="aspectFill" src="{{itemInfo.basicInfo.pic}}" class="viewImage"></image>
       <view class="viewFlexContainer">
-        <view class="viewFlexName">{{itemInfo.basicInfo.name}}(20斤装)</view>
+        <view class="viewFlexName">{{itemInfo.basicInfo.name}}</view>
         <view class="viewFlexPrice">
           <text class="minPrice">底价</text><wxc-price class="wxc-price">{{minPrice}}</wxc-price>
           <text class="originalPrice">原价</text><wxc-price status='del'>{{originalPrice}}</wxc-price>
