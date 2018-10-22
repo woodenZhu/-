@@ -11,15 +11,15 @@
       AYL 运动蓝牙耳机
     </view>
     <view class="swiper_box">
-      <view wx:for="{{goods}}" wx:key="id" style="overflow: visible;border-radius: 50%;">
+      <view wx:for="{{goods}}" wx:key="id">
         <view class="swiper_item">
           <view>
             <image mode="aspectFill" data-id="{{item.id}}" bindtap="toDetailsTap" src="{{item.pic}}_m" lazy-load="true"/>
           </view>
           <view class="title">{{item.characteristic}}</view>
           <view class="flex-wrp">
-            <wxc-price class="goods-minPrice">{{item.minPrice}}</wxc-price>
-            <wxc-price status='del' del-color="#aaa" class="goods-originalPrice">{{item.originalPrice}}</wxc-price>
+            <view class="goods-minPrice">￥{{item.minPrice}}</view>
+            <view status='del' del-color="#aaa" class="goods-originalPrice">￥{{item.originalPrice}}</view>
           </view>
         </view>
       </view>

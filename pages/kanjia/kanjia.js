@@ -346,11 +346,9 @@ Page({
       method: 'POST',
       data: util.json2Form({
         scene: scene,
-        path: 'pages/kanjia/kanjia'
+        page: 'pages/kanjia/kanjia'
       }),
       success: function(res) {
-        console.log("erwerima")
-        console.log(res.data.data)
         that.setData({
           popupStatus: 'hide',
           popupStatusImg: 'show',
